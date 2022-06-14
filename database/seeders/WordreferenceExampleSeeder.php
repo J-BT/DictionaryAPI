@@ -17,8 +17,6 @@ class WordreferenceExampleSeeder extends Seeder
     {
         DB::table("wordreference_histories")->truncate(); 
 
-        $wordreference_history = []; 
-
         $searchResultsExample = array(
             'espace' => 'space',
             'rêve' => 'dream',
