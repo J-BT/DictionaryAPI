@@ -43,7 +43,24 @@ class JishoSearchController extends Controller
         $response = json_decode($apiResponse->body());
 
         if($category == 'jpen'){
+            $result = $response->data[0]->senses[0]->english_definitions[0];
+            
+            //****Mettre conditions içi pour obtenir tous les resultats *****
+
+            // - faire foreach sur data[]
+            // - faire foreach sur senses[]
+            // - Si english_definitions[] contient plus d'un element convertir ses elements en chaîne de caractères
+
             //ajout table jisho_histories categorie jpen
+            $jishoHistory = new JishoHistory();
+
+            $jishoHistory->category = $category;
+            $jishoHistory->languageFrom = "japanese";
+            $jishoHistory->languageTo = "english";
+            $jishoHistory->search = $search;
+            $jishoHistory->result = $result;
+
+            $jishoHistory->save();
         }
 
         else if($category == 'enjp'){
@@ -51,6 +68,7 @@ class JishoSearchController extends Controller
         }
 
         
+
         return response()->json($response);
     }
 
