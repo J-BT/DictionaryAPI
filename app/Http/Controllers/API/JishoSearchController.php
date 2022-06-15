@@ -40,10 +40,19 @@ class JishoSearchController extends Controller
     {
         //Call for jisho.org here !!!
         $apiResponse = Http::get("http://beta.jisho.org/api/v1/search/words?keyword=$search");
-
         $response = json_decode($apiResponse->body());
 
         if(empty($response->data)){
+            $jishoHistory = new JishoHistory();
+
+            $jishoHistory->category = $category;
+            $jishoHistory->languageFrom = "japanese";
+            $jishoHistory->languageTo = "english";
+            $jishoHistory->search = $search;
+            $jishoHistory->result = "no result";
+
+            $jishoHistory->save();
+
             return response()->json("Aucun resultat pour $search");
         }
 
@@ -53,19 +62,17 @@ class JishoSearchController extends Controller
             $englishTranslation = array();
             $datas = $response->data;
             
-
-            
             foreach($datas as $data){
                 $nthSense = 1;
                 $senses = $data->senses;
-                $janpaneseWord = $data->slug;
+                $japaneseWord = $data->slug;
                 foreach($senses as $sense){
                     $englishTranslations =  $sense->english_definitions;
                     $translationRow = 0;
                     foreach($englishTranslations as $translation){
                         $resume = "";
                         if($translationRow == 0){
-                            $resume = "[Word=$janpaneseWord Sense=$nthSense] :";
+                            $resume = "[Word=$japaneseWord Sense=$nthSense] :";
                         }
                         array_push($englishTranslation, "$resume $translation");
                         $translationRow++;
@@ -96,7 +103,36 @@ class JishoSearchController extends Controller
         }
 
         else if($category == 'enjp'){
-           //ajout table jisho_histories categorie enjp
+
+            $japaneseTranslation = array();
+            $datas = $response->data;
+        
+            $nthTranslation = 1;
+            foreach($datas as $data){
+                // $result = $response->data[0]->senses[0]->english_definitions[0];
+                $sense = $data->senses[0];
+                $japaneseWord = $data->slug;
+                $englishWord =  $sense->english_definitions[0];
+
+                array_push($japaneseTranslation, "[Word=$englishWord Translation=$nthTranslation] : $japaneseWord");
+
+                $nthTranslation++;
+            }
+
+            $result = implode("," , $japaneseTranslation);
+            
+
+            //ajout table jisho_histories categorie jpen
+            $jishoHistory = new JishoHistory();
+
+            $jishoHistory->category = $category;
+            $jishoHistory->languageFrom = "english";
+            $jishoHistory->languageTo = "japanese";
+            $jishoHistory->search = $search;
+            $jishoHistory->result = $result;
+
+            $jishoHistory->save();
+
         }
 
         return response()->json($response);
