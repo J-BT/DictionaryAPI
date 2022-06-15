@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class JishoHistory extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['reference', 'name'];
 }
