@@ -48,7 +48,34 @@ class JishoSearchController extends Controller
         }
 
         if($category == 'jpen'){
-            $result = $response->data[0]->senses[0]->english_definitions[0];
+            // $result = $response->data[0]->senses[0]->english_definitions[0];
+
+            $englishTranslation = array();
+            $datas = $response->data;
+            
+
+            
+            foreach($datas as $data){
+                $nthSense = 1;
+                $senses = $data->senses;
+                $janpaneseWord = $data->slug;
+                foreach($senses as $sense){
+                    $englishTranslations =  $sense->english_definitions;
+                    $translationRow = 0;
+                    foreach($englishTranslations as $translation){
+                        $resume = "";
+                        if($translationRow == 0){
+                            $resume = "[Word=$janpaneseWord Sense=$nthSense] :";
+                        }
+                        array_push($englishTranslation, "$resume $translation");
+                        $translationRow++;
+                    }
+                    
+                    $nthSense ++;
+                }
+            }
+            $result = implode("," , $englishTranslation);
+            
             
             //****Mettre conditions içi pour obtenir tous les resultats *****
 
