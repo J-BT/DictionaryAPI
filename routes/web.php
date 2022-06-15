@@ -14,20 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('welcomeAPI');
 });
-
-Route::get('/welcomeAPI', function(){
-    // return view('welcomeAPI');
-    return "<h1> Welcome to Dictionary API !! </h1>";
-});
-
-// Route::get('/jishoHistory/{id}', function($id){
-//     // return view('welcomeAPI');
-//     return App\Models\JishoHistory::find($id);
-// });
-
-// Route::get('/jishoHistories', function(){
-//     // return view('welcomeAPI');
-//     return App\Models\JishoHistory::all();
-// });
