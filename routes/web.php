@@ -22,12 +22,12 @@ Route::get('/welcomeAPI', function(){
     return "<h1> Welcome to Dictionary API !! </h1>";
 });
 
-Route::get('/jishoHistory/{id}', function($id){
-    // return view('welcomeAPI');
-    return App\Models\JishoHistory::find($id);
-});
+// Route::get('/jishoHistory/{id}', function($id){
+//     // return view('welcomeAPI');
+//     return App\Models\JishoHistory::find($id);
+// });
 
-Route::get('/jishoHistories', function(){
-    // return view('welcomeAPI');
-    return App\Models\JishoHistory::all();
-});
+// Route::get('/jishoHistories', function(){
+//     // return view('welcomeAPI');
+//     return App\Models\JishoHistory::all();
+// });
