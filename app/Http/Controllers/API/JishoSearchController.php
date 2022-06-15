@@ -40,7 +40,12 @@ class JishoSearchController extends Controller
     {
         //Call for jisho.org here !!!
         $apiResponse = Http::get("http://beta.jisho.org/api/v1/search/words?keyword=$search");
+
         $response = json_decode($apiResponse->body());
+
+        if(empty($response->data)){
+            return response()->json("Aucun resultat pour $search");
+        }
 
         if($category == 'jpen'){
             $result = $response->data[0]->senses[0]->english_definitions[0];
@@ -67,9 +72,8 @@ class JishoSearchController extends Controller
            //ajout table jisho_histories categorie enjp
         }
 
-        
-
         return response()->json($response);
+
     }
 
     /**
