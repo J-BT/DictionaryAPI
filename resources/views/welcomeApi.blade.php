@@ -15,13 +15,52 @@
         </style>
 
         <style>
-            body {
-                font-family: 'Nunito', sans-serif;
+            
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
+            html {
+                font-size: 14px;
+                position: relative;
+                min-height: 100%;
+            }
+
+            body {
+                /* Margin bottom by footer height */
+                margin-bottom: 60px;
+                font-family: "Roboto", sans-serif;
+                /*background image içi*/
+                /* background-image: url("C:\Users\celin\OneDrive\Images\janko-ferlic-sfL_QOnmy00-unsplash.jpg");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover; */
+                background-color: #191932 !important;
+                color: #feffff !important; /*PuraVida*/
+                line-height: 1 !important;
+                min-height: 100vh;
+            }
+
+        
         </style>
     </head>
     <body class="antialiased">
-        <h1>Dictionary API</h1>
-        <h2>Bienvenue!</h2>
+
+
+        <style>
+            ::placeholder {
+                color: white;
+                opacity: 1;
+            }
+        </style>
+
+        <div class="d-flex flex-column justify-content-center align-items-center my-5">
+            <div class="d-flex flex-column justify-content-center align-items-center text-justify">
+                <h1 class="font-weight-bold" style="text-transform:uppercase; font-size:4.9rem;">Bienvenue</h1>
+                <h1 class="" style="text-transform: uppercase; font-size: 2rem; font-weight: lighter;">Dictionary API</h1>
+            </div>
+        </div>
     </body>
 </html>
