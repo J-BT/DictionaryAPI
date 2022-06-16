@@ -66,10 +66,10 @@
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Jisho.org est à mon sens l'un des meilleurs dictionnaire anglais/ japonais en ligne.
+                                    Jisho.org est à mon sens l'un des meilleurs dictionnaire anglais/ japonais disponible en ligne.
                                     Or il n'est pas forcement pratique pour les francophones de devoir faire une double recherche 
-                                    (japonais->anglais anglais->français) lorsque qu'ils rencontrent un nouveau mot anglais...
-                                    Ainsi, Dictionary API remedie à cela en ajoutant des traduction anglais->français à chaque recherche.
+                                    (japonais->anglais anglais->français) lorsque qu'ils rencontrent un ou plusieurs nouveaux mots anglais...
+                                    Ainsi, Dictionary API remedie à cela en ajoutant y des traductions anglais->français à chaque recherche.
                                 </div>
                             </div>
                         </div>
