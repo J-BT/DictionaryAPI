@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class WordreferenceHistory extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['reference', 'name'];
 }
