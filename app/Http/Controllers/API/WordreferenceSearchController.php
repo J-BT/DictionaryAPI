@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Weidner\Goutte\GoutteFacade;
 
-
-
 class WordreferenceSearchController extends Controller
 {
     /**
@@ -42,11 +40,7 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
-        $crawler = GoutteFacade::request('GET', 'https://www.wordreference.com/enfr/dream');
-
-        $crawler->filter('.ToWrd')->each(function ($node) {
-            dump($node->text());
-        });
+        $crawler = GoutteFacade::request('GET', "https://www.wordreference.com/{$category}/{$search}");
 
         $crawler->filter('.ToWrd')->each(function ($node) {
             dump($node->text());
