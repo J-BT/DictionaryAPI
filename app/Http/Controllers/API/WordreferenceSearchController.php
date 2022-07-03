@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\WordreferenceHistory;
+use App\Models\JishoHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class WordreferenceSearchController extends Controller
 {
@@ -35,9 +37,10 @@ class WordreferenceSearchController extends Controller
      * @param  \App\Models\WordreferenceHistory  $wordreferenceHistory
      * @return \Illuminate\Http\Response
      */
-    public function show(WordreferenceHistory $wordreferenceHistory)
+    public function show($category, $search)
     {
-        //
+        $response = "";
+        return response()->json($response);
     }
 
     /**
