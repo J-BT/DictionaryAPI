@@ -40,22 +40,34 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
-        $crawler = GoutteFacade::request('GET', "https://www.wordreference.com/{$category}/{$search}");
+        $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
 
-        $crawler->filter('.ToWrd')->each(function ($node) {
+        // Miots et traductions regroupés par sections
+        $mainTable = $page->filter('.WRD')->each(function ($node) {
             dump($node->text());
         });
 
-        // $crawler->filter('.FrWrd')->each(function ($node) {
+
+        // // Mots recherchés
+        // $FrWrd = $page->filter('.FrWrd')->each(function ($node) {
+        //     dump($node->text());
+        // });
+        
+
+        // // Traductions
+        // $ToWrd = $page->filter('.ToWrd')->each(function ($node) {
         //     dump($node->text());
         // });
 
 
-    
+        // // // titres sections
+        // $wrtopsection = $page->filter('.wrtopsection')->each(function ($node) {
+        //     dump($node->text());
+        // });
 
 
-        $response = $crawler;
-        return response()->json($response);
+
+        return response()->json($mainTable);
     }
 
     /**
