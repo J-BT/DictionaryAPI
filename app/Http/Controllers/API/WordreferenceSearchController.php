@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Weidner\Goutte\GoutteFacade;
 
+
+
 class WordreferenceSearchController extends Controller
 {
     /**
