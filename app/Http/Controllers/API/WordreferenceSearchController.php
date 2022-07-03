@@ -7,6 +7,7 @@ use App\Models\WordreferenceHistory;
 use App\Models\JishoHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Weidner\Goutte\GoutteFacade;
 
 class WordreferenceSearchController extends Controller
 {
@@ -39,7 +40,25 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
-        $response = "";
+        $crawler = GoutteFacade::request('GET', 'https://www.wordreference.com/enfr/dream');
+
+        $crawler->filter('.ToWrd')->each(function ($node) {
+            dump($node->text());
+        });
+
+        $crawler->filter('.ToWrd')->each(function ($node) {
+            dump($node->text());
+        });
+
+        // $crawler->filter('.FrWrd')->each(function ($node) {
+        //     dump($node->text());
+        // });
+
+
+    
+
+
+        $response = $crawler;
         return response()->json($response);
     }
 
