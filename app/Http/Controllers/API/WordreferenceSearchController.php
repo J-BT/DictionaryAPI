@@ -41,26 +41,13 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
-        // $allSections = Wordreference::GetAllSections($category, $search);
-        // $fromWords = Wordreference::FromWords($category, $search);
+        $topSections = Wordreference::WordTopSections($category, $search);
+        $fromWords = Wordreference::FromWords($category, $search);
         $toWords = Wordreference::toWords($category, $search);
 
-        // $arrayOfResults = array();
-        // $i = 0;
-        // foreach($FrWrd as $fromRow){
-        //     $arrayOfResults[$i] = $ToWrd[$i];
-        //     $i++;
-        // }
+        $results = array("topSections" => $topSections , "fromWords" => $fromWords, "toWords" => $toWords);
 
-        // $results = array("search" => $FrWrd , "results" => $ToWrd);
-
-
-        // // // titres sections
-        // $wrtopsection = $page->filter('.wrtopsection')->each(function ($node) {
-        //     dump($node->text());
-        // });
-
-        return $toWords;
+        return response()->json($results);
     }
 
     /**
