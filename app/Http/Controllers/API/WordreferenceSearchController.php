@@ -16,6 +16,7 @@ class WordreferenceSearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $arrayOfResults = array();
     public function index()
     {
         //
@@ -42,22 +43,29 @@ class WordreferenceSearchController extends Controller
     {
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
 
-        // Miots et traductions regroupés par sections
-        $mainTable = $page->filter('.WRD')->each(function ($node) {
+        // Mots et traductions regroupés par sections
+        // $allSections = array($page->filter('.WRD')->each(function ($section) {
+        //     dump($section->text());
+        // }));
+
+        // Mots recherchés
+        $FrWrd = array($page->filter('.FrWrd')->each(function ($node) {
             dump($node->text());
-        });
-
-
-        // // Mots recherchés
-        // $FrWrd = $page->filter('.FrWrd')->each(function ($node) {
-        //     dump($node->text());
-        // });
+        }));
         
+        // Traductions
+        $ToWrd = array($page->filter('.ToWrd')->each(function ($node) {
+            dump($node->text());
+        }));
 
-        // // Traductions
-        // $ToWrd = $page->filter('.ToWrd')->each(function ($node) {
-        //     dump($node->text());
-        // });
+        $arrayOfResults = array();
+        $i = 0;
+        foreach($FrWrd as $fromRow){
+            $arrayOfResults[$i] = $ToWrd[$i];
+            $i++;
+        }
+
+        // $results = array("search" => $FrWrd , "results" => $ToWrd);
 
 
         // // // titres sections
@@ -67,7 +75,7 @@ class WordreferenceSearchController extends Controller
 
 
 
-        return response()->json($mainTable);
+        return response()->json($arrayOfResults);
     }
 
     /**
