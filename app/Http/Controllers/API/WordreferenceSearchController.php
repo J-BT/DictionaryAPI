@@ -41,19 +41,9 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
-        $allSections = Wordreference::GetAllSections($category, $search);
-
-        // // Mots recherchés
-        // $FrWrd = array($page->filter('.FrWrd')->each(function ($node) {
-        //     dump($node->text());
-        //     // $node->text();
-        // }));
-        
-        // // Traductions
-        // $ToWrd = array($page->filter('.ToWrd')->each(function ($node) {
-        //     dump($node->text());
-        //     // $node->text();
-        // }));
+        // $allSections = Wordreference::GetAllSections($category, $search);
+        // $fromWords = Wordreference::FromWords($category, $search);
+        $toWords = Wordreference::toWords($category, $search);
 
         // $arrayOfResults = array();
         // $i = 0;
@@ -70,7 +60,7 @@ class WordreferenceSearchController extends Controller
         //     dump($node->text());
         // });
 
-        return $allSections;
+        return $toWords;
     }
 
     /**
