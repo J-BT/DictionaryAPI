@@ -8,6 +8,7 @@ use App\Models\JishoHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Weidner\Goutte\GoutteFacade;
+use Wordreference;
 
 class WordreferenceSearchController extends Controller
 {
@@ -16,7 +17,6 @@ class WordreferenceSearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $arrayOfResults = array();
     public function index()
     {
         //
@@ -41,29 +41,26 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
-        $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
+        $allSections = Wordreference::GetAllSections($category, $search);
 
-        // Mots et traductions regroupés par sections
-        // $allSections = array($page->filter('.WRD')->each(function ($section) {
-        //     dump($section->text());
+        // // Mots recherchés
+        // $FrWrd = array($page->filter('.FrWrd')->each(function ($node) {
+        //     dump($node->text());
+        //     // $node->text();
+        // }));
+        
+        // // Traductions
+        // $ToWrd = array($page->filter('.ToWrd')->each(function ($node) {
+        //     dump($node->text());
+        //     // $node->text();
         // }));
 
-        // Mots recherchés
-        $FrWrd = array($page->filter('.FrWrd')->each(function ($node) {
-            dump($node->text());
-        }));
-        
-        // Traductions
-        $ToWrd = array($page->filter('.ToWrd')->each(function ($node) {
-            dump($node->text());
-        }));
-
-        $arrayOfResults = array();
-        $i = 0;
-        foreach($FrWrd as $fromRow){
-            $arrayOfResults[$i] = $ToWrd[$i];
-            $i++;
-        }
+        // $arrayOfResults = array();
+        // $i = 0;
+        // foreach($FrWrd as $fromRow){
+        //     $arrayOfResults[$i] = $ToWrd[$i];
+        //     $i++;
+        // }
 
         // $results = array("search" => $FrWrd , "results" => $ToWrd);
 
@@ -73,9 +70,7 @@ class WordreferenceSearchController extends Controller
         //     dump($node->text());
         // });
 
-
-
-        return response()->json($arrayOfResults);
+        return $allSections;
     }
 
     /**
