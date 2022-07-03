@@ -8,6 +8,8 @@ use App\Models\JishoHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+
+
 class WordreferenceSearchController extends Controller
 {
     /**
