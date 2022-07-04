@@ -44,10 +44,14 @@ class WordreferenceSearchController extends Controller
         $topSections = Wordreference::WordTopSections($category, $search);
         $fromWords = Wordreference::FromWords($category, $search);
         $toWords = Wordreference::toWords($category, $search);
+        $allTd = Wordreference::AllTd($category, $search);
 
-        $results = array("topSections" => $topSections , "fromWords" => $fromWords, "toWords" => $toWords);
+        $tempResults = array("topSections" => $topSections , "fromWords" => $fromWords, "toWords" => $toWords, "allTd" => $allTd);
 
-        return response()->json($results);
+        // $results = Wordreference::GetJson($category, $search);
+
+
+        return response()->json($tempResults);
     }
 
     /**
