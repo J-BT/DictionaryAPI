@@ -1,7 +1,7 @@
 <?php
 
 use Weidner\Goutte\GoutteFacade;
-session_start();
+session_start(); // car les variables locales ne fonctionnent pas dans les each()
 
 class Wordreference
 {
@@ -52,16 +52,20 @@ class Wordreference
     // à utiliser pour que les fromWord & ToWords correspondent
     public static function AllTd($category, $search){
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
-        $_SESSION["ToWrd"] = array();
-        $page->filter('tr.even, tr.odd')->each(function ($node) {
+        $_SESSION["AllTd"] = array();
+        $page->filter(
+            'table.WRD:first-of-type tr.wrtopsection td,
+            table.WRD:first-of-type tr.even td:not(.FrEx):not(.ToEx),
+            table.WRD:first-of-type tr.odd td:not(.FrEx):not(.ToEx)'
+            )->each(function ($node) {
             // dump($node->text());
-            array_push($_SESSION["ToWrd"], $node->text());
+            array_push($_SESSION["AllTd"], $node->text());
             
         });
-        $ToWrd = $_SESSION["ToWrd"];
-        unset($_SESSION["ToWrd"]);
+        $AllTd = $_SESSION["AllTd"];
+        unset($_SESSION["AllTd"]);
 
-        return $ToWrd;
+        return $AllTd;
     }
 
     // Créer Json à partir des 3 methodes ci-dessus
