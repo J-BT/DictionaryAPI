@@ -65,7 +65,17 @@ class Wordreference
         $AllTd = $_SESSION["AllTd"];
         unset($_SESSION["AllTd"]);
 
-        return $AllTd;
+        $newArray = array();
+        $counSpace = 0;
+
+        foreach($AllTd as $td){
+            array_push($newArray, $td);
+            if($td == "\\u21d2"){
+                array_push($newArray, "----------------");
+            }
+        }
+
+        return $newArray;
     }
 
     // Créer Json à partir des 3 methodes ci-dessus
