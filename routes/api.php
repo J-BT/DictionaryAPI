@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('jisho_histories', JishoHistoryController::class,);
-Route::get('jisho/{category}/{search}', [JishoSearchController::class, 'show']);
-Route::get('wordreference/{category}/{search}', [WordreferenceSearchController::class, 'show']);
+Route::get('jisho_histories', [JishoHistoryController::class, 'index'])->name('jisho_histories');
+Route::get('jisho/{category}/{search}', [JishoSearchController::class, 'show'])->name('jisho_search');
+
+Route::get('wordreference/{category}/{search}', [WordreferenceSearchController::class, 'show'])->name('wordreference_search');

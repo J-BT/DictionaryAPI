@@ -18,4 +18,6 @@ class HomeController extends Controller
 
         return view('home.index', ['cities' => $cities, 'datenow' => $datenow]);
     }
+
+
 }

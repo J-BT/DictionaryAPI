@@ -4,30 +4,20 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\JishoHistory;
-えんちおｎ
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 
 class JishoSearchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    
+    // public function jishoSearchFromHome()
+    // {
+    //     $category = $_GET['category'];
+    //     $search = $_GET['search'];
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    //     return redirect('jisho_search', ['category' => $category, 'search' => $search]);
+    // }
 
     /**
      * Display the specified resource.
