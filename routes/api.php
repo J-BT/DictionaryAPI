@@ -23,5 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('jisho_histories', [JishoHistoryController::class, 'index'])->name('jisho_histories');
 Route::get('jisho/{category}/{search}', [JishoSearchController::class, 'show'])->name('jisho_search');
+Route::get('jishoHome', [JishoSearchController::class, 'jishoSearchFromHome'])->name('jisho_search_home');
 
 Route::get('wordreference/{category}/{search}', [WordreferenceSearchController::class, 'show'])->name('wordreference_search');

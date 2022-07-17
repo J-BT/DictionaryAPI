@@ -11,13 +11,16 @@ use Illuminate\Support\Facades\Http;
 class JishoSearchController extends Controller
 {
     
-    // public function jishoSearchFromHome()
-    // {
-    //     $category = $_GET['category'];
-    //     $search = $_GET['search'];
+    public function jishoSearchFromHome(Request $request)
+    {
+  
+        $category = $request->input('category');
+        $search = $request->input('search');
+    
 
-    //     return redirect('jisho_search', ['category' => $category, 'search' => $search]);
-    // }
+        return route("api/jisho/{$category}/{$search}");
+        // return $search;
+    }
 
     /**
      * Display the specified resource.

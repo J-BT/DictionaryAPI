@@ -23,13 +23,25 @@
 </form>
 
 <h3>jisho/{category}/{search}</h3>
-<form action="{{ route('jisho_search', ['category' => "jpen", 'search' => "成功"]) }}" method="GET">
+{{-- <form action="{{ route('jisho_search', ['category' => "jpen", 'search' => "成功"]) }}" method="GET">
     <div class="mb-3">
         <label for="jisho_search" class="form-label">category</label>
         <input type="text" class="form-control" id="category" > 
 
         <label for="jisho_search" class="form-label">search</label>
         <input type="text" class="form-control" id="search" >
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form> --}}
+
+<form action="{{ route('jisho_search_home') }}" method="GET">
+    <div class="mb-3">
+        <label for="jisho_search" class="form-label">category</label>
+        <input type="text" class="form-control" id="category" name="category"> 
+
+        <label for="jisho_search" class="form-label">search</label>
+        <input type="text" class="form-control" id="search" name="search">
     </div>
     
     <button type="submit" class="btn btn-primary">Submit</button>
