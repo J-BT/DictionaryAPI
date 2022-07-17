@@ -10254,9 +10254,13 @@ textarea.form-control-lg {
 }
 /*index.blade.php*/
 
+form
+{
+    width: 20vw;
+}
+
 .endpointSearch
 {
-    width: 500 px;
-    color:green;
-    font-size: 2em;
+    margin-top : 50px;
+    margin-bottom: 50px;
 }
