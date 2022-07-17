@@ -7,6 +7,8 @@ use App\Models\JishoHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+use Illuminate\Support\Facades\Route;
+
 
 class JishoSearchController extends Controller
 {
@@ -17,9 +19,7 @@ class JishoSearchController extends Controller
         $category = $request->input('category');
         $search = $request->input('search');
     
-
-        return route("api/jisho/{$category}/{$search}");
-        // return $search;
+        return redirect(route('jisho_search', ['category' => $category, 'search' => $search]));
     }
 
     /**
