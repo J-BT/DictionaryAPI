@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string("languageFrom");
             $table->string("languageTo");
             $table->string("search");
-            $table->integer("searchCount")->nullable;
-            $table->string("result")->nullable;
+            $table->integer("searchCount")->default(1);
+            $table->text("result")->nullable;
             $table->timestamps();
         });
     }
