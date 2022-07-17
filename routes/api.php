@@ -26,3 +26,4 @@ Route::get('jisho/{category}/{search}', [JishoSearchController::class, 'show'])-
 Route::get('jishoHome', [JishoSearchController::class, 'jishoSearchFromHome'])->name('jisho_search_home');
 
 Route::get('wordreference/{category}/{search}', [WordreferenceSearchController::class, 'show'])->name('wordreference_search');
+Route::get('wordreferenceHome', [WordreferenceSearchController::class, 'WordreferenceSearchFromHome'])->name('wordreference_search_home');

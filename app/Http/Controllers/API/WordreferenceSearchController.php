@@ -12,14 +12,13 @@ use Wordreference;
 
 class WordreferenceSearchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function WordreferenceSearchFromHome(Request $request)
     {
-        //
+  
+        $category = $request->input('category');
+        $search = $request->input('search');
+    
+        return redirect(route('wordreference_search', ['category' => $category, 'search' => $search]));
     }
 
     /**
