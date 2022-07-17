@@ -1,3 +1,3 @@
 import './bootstrap';
 
-console.log("ようこそ")
+console.log("休憩しおう！")

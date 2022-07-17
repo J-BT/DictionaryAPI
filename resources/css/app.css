@@ -3,8 +3,6 @@
 .endpointSearch
 {
     width: 500 px;
-}
-
-body{
     color:green;
+    font-size: 2em;
 }
