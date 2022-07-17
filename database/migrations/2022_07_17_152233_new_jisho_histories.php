@@ -14,11 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('jisho_histories', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unique();
             $table->string("category");
             $table->string("languageFrom");
             $table->string("languageTo");
             $table->string("search");
+            $table->integer("searchCount")->nullable;
             $table->string("result")->nullable;
             $table->timestamps();
         });
