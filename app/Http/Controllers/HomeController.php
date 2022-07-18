@@ -19,5 +19,12 @@ class HomeController extends Controller
         return view('home.index', ['cities' => $cities, 'datenow' => $datenow]);
     }
 
+    public function endpoints()
+    {
+       
+
+        return view('endpoints.list');
+    }
+
 
 }
