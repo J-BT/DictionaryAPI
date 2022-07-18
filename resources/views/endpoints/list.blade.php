@@ -4,12 +4,10 @@
 
 @section('content')
 
-
-
 <div class="container-fluid">
     <h2>Liste des endpoints</h2>
     <div class="endpointSearch">
-        <form class="container-fluid" action="{{ route('jisho_histories') }}" method="GET">
+        <form class="" action="{{ route('jisho_histories') }}" method="GET">
             <h3 class="endpointTitle">/api/jisho_histories</h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
@@ -19,11 +17,12 @@
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
         </form>
+        <div class="resultEndpointCall"></div>
     </div>
 
 
     <div class="endpointSearch">
-        <form class="container-fluid" action="{{ route('jisho_search_home') }}" method="GET">
+        <form class="" action="{{ route('jisho_search_home') }}" method="GET">
             <h3 class="endpointTitle">/api/jisho/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
@@ -35,11 +34,12 @@
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
         </form>
+        <div class="resultEndpointCall"></div>
     </div>
 
 
     <div class="endpointSearch">
-        <form class="container-fluid" action="{{ route('wordreference_search_home') }}" method="GET">
+        <form class="" action="{{ route('wordreference_search_home') }}" method="GET">
             <h3 class="endpointTitle">/api/wordreference/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
@@ -51,6 +51,7 @@
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
         </form>
+        <div class="resultEndpointCall"></div>
     </div>
 
 {{-- <p>{{ $datenow }}</p> --}}
