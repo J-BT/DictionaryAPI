@@ -10,8 +10,6 @@
 
     <title>Dictionary API - @yield('title')</title>
 
-
-
 </head>
 <body>
     <div>
