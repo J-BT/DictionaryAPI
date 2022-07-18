@@ -23,7 +23,8 @@
                 <a class="nav-link active" aria-current="page" href="{{ route('home') }}">API Documentation</a>
               </li> --}}
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{{ route('endpoints') }}" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" 
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     API Documentation
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

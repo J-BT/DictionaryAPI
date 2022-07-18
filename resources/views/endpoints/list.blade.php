@@ -24,7 +24,7 @@
 
     <div class="endpointSearch">
         <form class="container-fluid" action="{{ route('jisho_search_home') }}" method="GET">
-            <h3 class="endpointTitle">api/jisho/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
+            <h3 class="endpointTitle">/api/jisho/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
                 <span class="input-group-text" id="basic-addon1">/api/jisho/</span>
@@ -40,7 +40,7 @@
 
     <div class="endpointSearch">
         <form class="container-fluid" action="{{ route('wordreference_search_home') }}" method="GET">
-            <h3 class="endpointTitle">api/wordreference/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
+            <h3 class="endpointTitle">/api/wordreference/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
                 <span class="input-group-text" id="basic-addon1">/api/wordreference/</span>
