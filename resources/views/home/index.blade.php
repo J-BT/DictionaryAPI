@@ -15,14 +15,21 @@
 
     <div class="endpointSearch">
         <h3>/api/jisho_histories</h3>
-        <form action="{{ route('jisho_histories') }}" method="GET">
+        <form class="container-fluid" action="{{ route('jisho_histories') }}" method="GET">
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1">/api/jisho_histories</span>
+              <input type="hidden" class="form-control" placeholder="all" aria-label="all" aria-describedby="basic-addon1" disabled>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {{-- <form action="{{ route('jisho_histories') }}" method="GET">
             <div class="mb-3">
                 <label for="jisho_histories" class="form-label">jisho_histories</label>
                 <input type="hidden" class="form-control" id="jisho_histories" > 
             </div>
             
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </form> --}}
     </div>
 
 
