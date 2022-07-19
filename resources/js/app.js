@@ -5,8 +5,32 @@ window.$ = window.jQuery = $;
 import 'jquery-ui/ui/widgets/datepicker.js';
 
 
-//test jisho_search
+//jisho_histories
+$(function() {
+    $("#jisho_historiesAjax").on("submit", function(e) { //id of form 
+      e.preventDefault();
 
+      $.ajax({
+        type: 'GET',
+        url: `api/jisho_histories`,
+        dataType: 'json',
+
+        success: function(response) {
+
+            console.log(response);
+            //let's empty the div before filling with the json
+            $("#resultJishoHistories").html("");
+            let resultJson = JSON.stringify(response.jishoHistories, null, 4);
+            $("#resultJishoHistories").html(`<div>${resultJson}</div>`);
+
+        }
+        
+      })
+    });
+
+  });
+
+//jisho_search
 $(function() {
     $("#jisho_search_homeAjax").on("submit", function(e) { //id of form 
       e.preventDefault();
