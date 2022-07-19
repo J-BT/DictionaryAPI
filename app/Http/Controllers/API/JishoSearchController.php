@@ -51,36 +51,11 @@ class JishoSearchController extends Controller
         if($category == 'jpen'){
             // $result = $response->data[0]->senses[0]->english_definitions[0];
 
-            $englishTranslation = array();
             $datas = $response->data;
-            
-            foreach($datas as $data){
-                $nthSense = 1;
-                $senses = $data->senses;
-                $japaneseWord = $data->slug;
-                foreach($senses as $sense){
-                    $englishTranslations =  $sense->english_definitions;
-                    $translationRow = 0;
-                    foreach($englishTranslations as $translation){
-                        $resume = "";
-                        if($translationRow == 0){
-                            $resume = "[Word=$japaneseWord Sense=$nthSense] :";
-                        }
-                        array_push($englishTranslation, "$resume $translation");
-                        $translationRow++;
-                    }
-                    
-                    $nthSense ++;
-                }
-            }
-            $result = implode("," , $englishTranslation);
+            $result = json_encode($datas, JSON_UNESCAPED_UNICODE);
             
             
             //****Mettre conditions içi pour obtenir tous les resultats *****
-
-            // - faire foreach sur data[]
-            // - faire foreach sur senses[]
-            // - Si english_definitions[] contient plus d'un element convertir ses elements en chaîne de caractères
 
             //ajout table jisho_histories categorie jpen
             $jishoHistory = new JishoHistory();
@@ -96,22 +71,8 @@ class JishoSearchController extends Controller
 
         else if($category == 'enjp'){
 
-            $japaneseTranslation = array();
             $datas = $response->data;
-        
-            $nthTranslation = 1;
-            foreach($datas as $data){
-                // $result = $response->data[0]->senses[0]->english_definitions[0];
-                $sense = $data->senses[0];
-                $japaneseWord = $data->slug;
-                $englishWord =  $sense->english_definitions[0];
-
-                array_push($japaneseTranslation, "[Word=$englishWord Translation=$nthTranslation] : $japaneseWord");
-
-                $nthTranslation++;
-            }
-
-            $result = implode("," , $japaneseTranslation);
+            $result = json_encode($datas, JSON_UNESCAPED_UNICODE);
             
 
             //ajout table jisho_histories categorie jpen
