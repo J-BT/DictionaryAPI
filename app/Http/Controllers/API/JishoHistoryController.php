@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\JishoHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 
 class JishoHistoryController extends Controller
 {
@@ -66,4 +69,12 @@ class JishoHistoryController extends Controller
     {
         //
     }
+
+            /**
+             * Get the value of post
+             */ 
+            public function getPost()
+            {
+                        return $this->post;
+            }
 }

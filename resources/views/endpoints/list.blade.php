@@ -24,14 +24,14 @@
 
 
     <div class="endpointSearch">
-        <form class="" action="{{ route('jisho_search_home') }}" method="GET">
+        <form class="" id="jisho_search_homeAjax" action="" method="GET">
             <h3 class="endpointTitle">/api/jisho/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
                 <span class="input-group-text" id="basic-addon1">/api/jisho/</span>
-                <input type="text" class="form-control" name="category" placeholder="category" >
+                <input type="text" class="form-control" name="category" id="category" placeholder="category" >
                 <span class="input-group-text" id="basic-addon1">/</span>
-                <input type="text" class="form-control" name="search" placeholder="search" >
+                <input type="text" class="form-control" name="search" id="search" placeholder="search" >
 
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
