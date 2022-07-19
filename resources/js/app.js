@@ -20,8 +20,7 @@ $(function() {
             console.log(response);
             //let's empty the div before filling with the json
             $("#resultJishoHistories").html("");
-            let resultJson = JSON.stringify(response.jishoHistories, null, 4);
-            $("#resultJishoHistories").html(`<div>${resultJson}</div>`);
+            document.getElementById("resultJishoHistories").innerHTML = JSON.stringify(response, null, 4);
 
         }
         
@@ -50,7 +49,8 @@ $(function() {
             //let's empty the div before filling with the json
             $("#resultJisho").html("");
             let resultJson = JSON.stringify(response.data, null, 4);
-            $("#resultJisho").html(`<div>${resultJson}</div>`);
+            $("#resultJisho").html(`${resultJson}`);
+            // document.getElementById("resultJisho").innerHTML = JSON.stringify(response.data, null, 4);
 
         }
         

@@ -8,7 +8,7 @@
     <h2>Liste des endpoints</h2>
     <div class="endpointSearch">
         <form class="" id="jisho_historiesAjax" action="" method="GET">
-            <h3 class="endpointTitle">/api/jisho/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
+            <h3 class="endpointTitle">/api/jisho_histories</h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
                 <span class="input-group-text" id="basic-addon1">/api/jisho_histories</span>
@@ -17,7 +17,11 @@
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
         </form>
-        <div class="resultEndpointCall"  style='' id="resultJishoHistories"></div>
+        <div class="resultEndpointCall"  style='' >
+            <pre id="resultJishoHistories">
+
+            </pre> 
+        </div>
     </div>
 
     <div class="endpointSearch">
@@ -33,7 +37,11 @@
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
         </form>
-        <div class="resultEndpointCall"  style='' id="resultJisho"></div>
+        <div class="resultEndpointCall"  style='' >
+            <pre id="resultJisho">
+
+            </pre> 
+        </div>
     </div>
 
 
