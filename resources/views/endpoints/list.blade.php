@@ -36,7 +36,7 @@
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
         </form>
-        <div class="resultEndpointCall"></div>
+        <div class="resultEndpointCall"  style='' id="resultJisho"></div>
     </div>
 
 
