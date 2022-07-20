@@ -88,6 +88,26 @@ class JishoSearchController extends Controller
 
         }
 
+        else{
+           
+            $datas = $response->data;
+            $result = json_encode($datas, JSON_UNESCAPED_UNICODE);
+            
+            
+            //****Mettre conditions içi pour obtenir tous les resultats *****
+
+            //ajout table jisho_histories categorie jpen
+            $jishoHistory = new JishoHistory();
+
+            $jishoHistory->category = $category;
+            $jishoHistory->languageFrom = "NaN";
+            $jishoHistory->languageTo = "NaN";
+            $jishoHistory->search = $search;
+            $jishoHistory->result = $result;
+
+            $jishoHistory->save(); 
+        }
+
         return response()->json($response);
 
     }
