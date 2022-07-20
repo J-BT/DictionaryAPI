@@ -33,32 +33,41 @@ class JishoSearchController extends Controller
     {
         /*** Checking the table jisho_histories ***/
         
-        //-- if $search already exits, the endpoint renders the colmun 'result' --
-        $db_query_jisho = DB::table('jisho_histories')->where('search', $search)->first();
+        //-- if $search already exits, the endpoint renders the column 'result' --
+        $db_query_jisho = JishoHistory::where('search', $search)->first();
 
         if(!empty($db_query_jisho)){
 
             $resultInDB = $db_query_jisho->result;
+
+            //------------------------------
             // +1 to the column search Count
+            $searchCount = $db_query_jisho->searchCount;
+            $searchCount += 1;
 
+            JishoHistory::where('search', $search)
+            ->update(['searchCount' => $searchCount]);
 
+            //-----------------------------------------
             // set actual datetime to updated_at column
+            date_default_timezone_set("Europe/Paris");
+            $datenow = date("Y-m-d H:i:s");
 
+            JishoHistory::where('search', $search)
+            ->update(['updated_at' => $datenow]);
 
-            // return json_decode($db_query_jisho->result, JSON_UNESCAPED_UNICODE);
-            return response()->json([
-                'meta' => [
-                    'status' => 200
-                ], 
-                'data' => json_decode($resultInDB, JSON_UNESCAPED_UNICODE)
-            ]);
+            return response()->json(json_decode($resultInDB, JSON_UNESCAPED_UNICODE));
         }
         
 
-        //-- if $search doesn't exit, the endpoint calls jisho's api --
+        //-- if $search doesn't exit in db, the endpoint calls jisho's api --
 
         $jishoHistory = new JishoHistory();
         $jishoHistory->search = $search;
+        
+        date_default_timezone_set("Europe/Paris");
+        $datenow = date("Y-m-d H:i:s");
+        $jishoHistory->created_at = $datenow;
 
         if($category == 'jpen'){
             
@@ -101,7 +110,7 @@ class JishoSearchController extends Controller
                 ]
             );
     
-            $jishoHistory->result = json_encode($noResult);;
+            $jishoHistory->result = json_encode($noResult);
             $jishoHistory->save();
 
             return response()->json($noResult);
