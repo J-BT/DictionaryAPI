@@ -30,85 +30,68 @@ class JishoSearchController extends Controller
      */
     public function show($category, $search)
     {
-        //Call for jisho.org here !!!
-        $apiResponse = Http::get("http://beta.jisho.org/api/v1/search/words?keyword=$search");
-        $response = json_decode($apiResponse->body());
-
-        if(empty($response->data)){
-            $jishoHistory = new JishoHistory();
-
-            $jishoHistory->category = $category;
-            $jishoHistory->languageFrom = "japanese";
-            $jishoHistory->languageTo = "english";
-            $jishoHistory->search = $search;
-            $jishoHistory->result = "no result";
-
-            $jishoHistory->save();
-
-            return response()->json("Aucun resultat pour $search");
-        }
+        $jishoHistory = new JishoHistory();
+        $jishoHistory->search = $search;
 
         if($category == 'jpen'){
-            // $result = $response->data[0]->senses[0]->english_definitions[0];
-
-            $datas = $response->data;
-            $result = json_encode($datas, JSON_UNESCAPED_UNICODE);
             
-            
-            //****Mettre conditions içi pour obtenir tous les resultats *****
-
-            //ajout table jisho_histories categorie jpen
-            $jishoHistory = new JishoHistory();
-
             $jishoHistory->category = $category;
             $jishoHistory->languageFrom = "japanese";
             $jishoHistory->languageTo = "english";
-            $jishoHistory->search = $search;
-            $jishoHistory->result = $result;
 
-            $jishoHistory->save();
         }
 
         else if($category == 'enjp'){
 
-            $datas = $response->data;
-            $result = json_encode($datas, JSON_UNESCAPED_UNICODE);
-            
-
-            //ajout table jisho_histories categorie jpen
-            $jishoHistory = new JishoHistory();
-
             $jishoHistory->category = $category;
             $jishoHistory->languageFrom = "english";
             $jishoHistory->languageTo = "japanese";
-            $jishoHistory->search = $search;
-            $jishoHistory->result = $result;
-
-            $jishoHistory->save();
-
         }
 
         else{
-           
-            $datas = $response->data;
-            $result = json_encode($datas, JSON_UNESCAPED_UNICODE);
-            
-            
-            //****Mettre conditions içi pour obtenir tous les resultats *****
-
-            //ajout table jisho_histories categorie jpen
-            $jishoHistory = new JishoHistory();
 
             $jishoHistory->category = $category;
             $jishoHistory->languageFrom = "NaN";
-            $jishoHistory->languageTo = "NaN";
-            $jishoHistory->search = $search;
-            $jishoHistory->result = $result;
-
-            $jishoHistory->save(); 
+            $jishoHistory->languageTo = "NaN"; 
         }
 
-        return response()->json($response);
+        //Call for jisho.org's api
+        $apiResponse = Http::get("http://beta.jisho.org/api/v1/search/words?keyword=$search");
+        $response = json_decode($apiResponse->body());
+        $datas = $response->data;
+
+
+
+        if(empty($datas)){
+    
+            $jishoHistory->result = "no result";
+            $jishoHistory->save();
+
+            return response()->json([
+                'meta' => [
+                    'status' => 404
+                ], 
+                'data' => 
+                [
+                    [
+                        'search' => $search,
+                        'result' => 'no result'
+                    ]
+                ]
+            ]);
+            
+        }
+
+        $result = json_encode($datas, JSON_UNESCAPED_UNICODE);
+        $jishoHistory->result = $result;
+        $jishoHistory->save();
+
+        return response()->json([
+            'meta' => [
+                'status' => 200
+            ], 
+            'data' => json_decode($result, JSON_UNESCAPED_UNICODE)
+        ]);
 
     }
 
