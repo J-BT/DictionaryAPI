@@ -63,21 +63,22 @@ class JishoSearchController extends Controller
 
 
         if(empty($datas)){
+
+            $noResult = array(
+                [
+                    'search' => $search,
+                    'result' => 'no result'
+                ]
+            );
     
-            $jishoHistory->result = "no result";
+            $jishoHistory->result = json_encode($noResult);;
             $jishoHistory->save();
 
             return response()->json([
                 'meta' => [
                     'status' => 404
                 ], 
-                'data' => 
-                [
-                    [
-                        'search' => $search,
-                        'result' => 'no result'
-                    ]
-                ]
+                'data' => $noResult
             ]);
             
         }
