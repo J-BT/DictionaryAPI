@@ -20,14 +20,35 @@ class JishoHistoryController extends Controller
     {
         $jishoHistories = JishoHistory::all();
 
-        // the following instruction convert $jishoHistory->result from string into json 
-        foreach ($jishoHistories as $jishoHistory) {
-            $jishoHistory->result = json_decode($jishoHistory->result, JSON_UNESCAPED_UNICODE);
-          } 
+        if($jishoHistories->count() > 0){
 
-        return response()->json([
-            'jishoHistories' => $jishoHistories
-        ]);
+            // the following instruction convert $jishoHistory->result from string into json 
+            foreach ($jishoHistories as $jishoHistory) {
+                $jishoHistory->result = json_decode($jishoHistory->result, JSON_UNESCAPED_UNICODE);
+            } 
+
+            $result = array(
+                'meta' => [
+                    'status' => 200
+                ], 
+                'data' => [
+                    'jishoHistories' => $jishoHistories
+                ]
+            );
+        }
+
+        else{
+            $result = array(
+                'meta' => [
+                    'status' => 404
+                ], 
+                'data' => [
+                    'jishoHistories' => 'empty table'
+                ]
+            );
+        }
+
+        return response()->json($result);
 
         // return response()->json(json_decode($result, JSON_UNESCAPED_UNICODE));
 
