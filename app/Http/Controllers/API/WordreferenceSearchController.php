@@ -45,12 +45,12 @@ class WordreferenceSearchController extends Controller
         //-- if $search already exits, the endpoint renders the column 'result' --
         $db_query_wordreference = WordreferenceHistory::where('search', $search)->first();
 
-        if(!empty($db_query_wordreference)){
+        // if(!empty($db_query_wordreference)){
 
-            $resultInDB = "";
+        //     $resultInDB = "";
 
-            return response()->json(json_decode($resultInDB, JSON_UNESCAPED_UNICODE));
-        }
+        //     return response()->json(json_decode($resultInDB, JSON_UNESCAPED_UNICODE));
+        // }
         
 
         //-- if $search doesn't exit in db, the endpoint calls wordreference's api --
@@ -84,22 +84,18 @@ class WordreferenceSearchController extends Controller
             $wordreferenceHistory->languageTo = "NaN"; 
         }
 
-        // //Call for jisho.org's api
-        // $apiResponse = Http::get("http://beta.jisho.org/api/v1/search/words?keyword=$search");
-        // $response = json_decode($apiResponse->body());
-        // $datas = $response->data;
 
 
-        $topSections = Wordreference::WordTopSections($category, $search);
-        $fromWords = Wordreference::FromWords($category, $search);
-        $toWords = Wordreference::toWords($category, $search);
-        $allTd = Wordreference::AllTd($category, $search);
-        $response = array("allTd" => $allTd);
+        // $topSections = Wordreference::WordTopSections($category, $search);
+        // $fromWords = Wordreference::FromWords($category, $search);
+        // $toWords = Wordreference::toWords($category, $search);
+        // $allTd = Wordreference::AllTd($category, $search);
+        // $response = array("allTd" => $allTd);
         
         /******** Wordreference::GetJson *******/
 
         // stocker json dans variable $response içi
-        // $response = Wordreference::GetJson($category, $search);
+        $response = Wordreference::GetJson($category, $search);
 
         /************************************* */
         

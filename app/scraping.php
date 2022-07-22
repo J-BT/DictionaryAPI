@@ -84,8 +84,29 @@ class Wordreference
         $topSections = Wordreference::WordTopSections($category, $search);
         $fromWords = Wordreference::FromWords($category, $search);
         $toWords = Wordreference::toWords($category, $search);
+        $allTd = Wordreference::AllTd($category, $search);
 
-        $result = array_combine($fromWords, $toWords);
+        $result = array("allTd" => $allTd);
+        // $result = array_combine($fromWords, $toWords);
+
+        if(empty($allTd)){
+            $noNesult = array(
+                'meta' => [
+                    'status' => 404
+                ], 
+                'data' => "no result"
+                
+            );
+            return $noNesult;
+        }
+
+        $result = array(
+            'meta' => [
+                'status' => 200
+            ], 
+            'data' => $result
+            
+        );
 
         return $result;
     }
