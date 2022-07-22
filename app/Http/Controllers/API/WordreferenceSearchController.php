@@ -129,26 +129,14 @@ class WordreferenceSearchController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WordreferenceHistory  $wordreferenceHistory
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, WordreferenceHistory $wordreferenceHistory)
+    public function wordreferenceTestScraping(Request $request)
     {
-        //
-    }
+  
+        $category = $request->input('category');
+        $search = $request->input('search');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\WordreferenceHistory  $wordreferenceHistory
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(WordreferenceHistory $wordreferenceHistory)
-    {
-        //
+        $response = Wordreference::test($category, $search);
+    
+        return $response;
     }
 }

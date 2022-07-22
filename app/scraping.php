@@ -140,6 +140,12 @@ class Wordreference
         // return $test;
         return $result;
     }
+
+    public static function test($category, $search){
+        $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
+
+        return var_dump($page);
+    }
         
 
 }
