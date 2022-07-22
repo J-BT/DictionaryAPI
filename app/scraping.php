@@ -77,20 +77,24 @@ class Wordreference
             'table.WRD tr:not(.ToEx)'
             )->each(function ($row) {
 
+                $_SESSION["json_enfr"] = array(
+                    'slug' => '**identifiant**',
+                    'type' => '**noun/verb/...**',
+                    'english' =>'**$search**',
+                    'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
+                    'senses' => [
+                        'french' => '**traduction**',
+                        'type' => '**nom/verbe/...**',
+                        'details' => '**ex: (figuré, péjoratif)	**'
+                    ]
+                );
+
                 $trClass = $row->extract(['class'])[0];
                     
                 if($trClass == 'even' || $trClass == 'odd' ){
                     
-                    if($_SESSION["previousTrClass"] != $trClass){
+                    //------ Inside new word results -----------------------------------------------
 
-                        array_push($_SESSION["jsonEnFrResults"], "************");
-                        array_push($_SESSION["jsonEnFrResults"], "**New line**");
-                        array_push($_SESSION["jsonEnFrResults"], "************");
-
-                    }
-
-
-                    
                     if($trClass == 'even'){
                         array_push($_SESSION["jsonEnFrResults"], "**even**");
                     }
@@ -102,11 +106,32 @@ class Wordreference
                     $row->filter('td')->each(function ($column) {
                             
                         $tdClass = $column->extract(['class'])[0];
-                        array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");    
+                        // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");
+       
                             
                     });
 
-                    
+
+
+                    // ------ New word -------------------------------------------------------------
+                    if($_SESSION["previousTrClass"] != $trClass){
+                        
+                        $row->filter('td')->each(function ($column) {
+                            
+                            $tdClass = $column->extract(['class'])[0];
+                            // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");
+
+                            if($tdClass == 'FrWrd'){
+                                $_SESSION["json_enfr"]['slug'] = $column->filter('strong')->text();
+                                $_SESSION["json_enfr"]['english'] = $column->filter('strong')->text();
+                                $_SESSION["json_enfr"]['type'] = $column->filter('em')->text();
+                            }
+
+                        });
+
+                        array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
+
+                    }
 
                     $_SESSION["previousTrClass"] = $trClass;
                 }
