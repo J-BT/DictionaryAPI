@@ -66,8 +66,7 @@ class Wordreference
         //     'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
         //     'senses' => [
         //         'french' => '**traduction**',
-        //         'type' => '**nom/verbe/...**',
-        //         'details' => '**ex: (figuré, péjoratif)	**'
+        //         'type' => '**nom/verbe/...**'
         //     ]
         // );
         $_SESSION["json_enfr"] = array(
@@ -137,8 +136,6 @@ class Wordreference
                                 $details = $details . ')';
                                 $_SESSION["json_enfr"]['details'] = $details;
 
-                                //details french
-                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['details'] =  str_replace($details, "", $column->text());
                             }
 
                         });
@@ -149,23 +146,14 @@ class Wordreference
                     if($_SESSION["previousTrClass"] == $_SESSION["trClass"]){
 
                         $row->filter('td:not(.FrEx):not(.ToEx)')->each(function ($column) {
+                            $tdClass = $column->extract(['class'])[0];
                                 
-                            if($_SESSION["trClass"] == 'ToWrd'){
+                            if($tdClass == 'ToWrd'){
 
 
                                 $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['french'] =  $column->text();
                                 $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['type'] =  $column->filter('em')->text();
-                            }
-
-                            else if($_SESSION["trClass"] != 'FrWrd' && $_SESSION["trClass"] != 'ToWrd'){
-                                
-                                
-                                $details = $column->text();
-                                $details = substr($details, 0, strpos($details, ')')); //removing the right part after the space
-                                $details = $details . ')';
-                                //details french
-                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['details'] =  str_replace($details, "", $column->text());
-                            }    
+                            }  
                             
                         });
                     }
