@@ -40,18 +40,96 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
+        /*** Checking the table jisho_histories ***/
+        
+        //-- if $search already exits, the endpoint renders the column 'result' --
+        $db_query_wordreference = WordreferenceHistory::where('search', $search)->first();
+
+        if(!empty($db_query_wordreference)){
+
+            $resultInDB = "";
+
+            return response()->json(json_decode($resultInDB, JSON_UNESCAPED_UNICODE));
+        }
+        
+
+        //-- if $search doesn't exit in db, the endpoint calls wordreference's api --
+
+        $wordreferenceHistory = new WordreferenceHistory();
+        $wordreferenceHistory->search = $search;
+        
+        date_default_timezone_set("Europe/Paris");
+        $datenow = date("Y-m-d H:i:s");
+        $wordreferenceHistory->created_at = $datenow;
+
+        if($category == 'enfr'){
+            
+            $wordreferenceHistory->category = $category;
+            $wordreferenceHistory->languageFrom = "english";
+            $wordreferenceHistory->languageTo = "french";
+
+        }
+
+        else if($category == 'fren'){
+
+            $wordreferenceHistory->category = $category;
+            $wordreferenceHistory->languageFrom = "french";
+            $wordreferenceHistory->languageTo = "english";
+        }
+
+        else{
+
+            $wordreferenceHistory->category = $category;
+            $wordreferenceHistory->languageFrom = "NaN";
+            $wordreferenceHistory->languageTo = "NaN"; 
+        }
+
+        // //Call for jisho.org's api
+        // $apiResponse = Http::get("http://beta.jisho.org/api/v1/search/words?keyword=$search");
+        // $response = json_decode($apiResponse->body());
+        // $datas = $response->data;
+
+
         $topSections = Wordreference::WordTopSections($category, $search);
         $fromWords = Wordreference::FromWords($category, $search);
         $toWords = Wordreference::toWords($category, $search);
         $allTd = Wordreference::AllTd($category, $search);
+        $response = array("allTd" => $allTd);
+        
+        /******** Wordreference::GetJson *******/
 
-        // $tempResults = array("topSections" => $topSections , "fromWords" => $fromWords, "toWords" => $toWords, "allTd" => $allTd);
-        $tempResults = array("allTd" => $allTd);
+        // stocker json dans variable $response içi
+        // $response = Wordreference::GetJson($category, $search);
 
-        // $results = Wordreference::GetJson($category, $search);
+        /************************************* */
+        
+        $datas = $response;
 
+        if(empty($datas)){
 
-        return response()->json($tempResults);
+            $noResult = array(
+                'meta' => [
+                    'status' => 404
+                ], 
+                'data' => [
+                    'search' => $search,
+                    'result' => 'no result'
+                ]
+            );
+    
+            $wordreferenceHistory->result = json_encode($noResult);
+            $wordreferenceHistory->save();
+
+            return response()->json($noResult);
+            
+        }
+
+        $result = json_encode($response, JSON_UNESCAPED_UNICODE);
+        $wordreferenceHistory->result = $result;
+        $wordreferenceHistory->save();
+
+        return response()->json(json_decode($result, JSON_UNESCAPED_UNICODE));
+
     }
 
     /**
