@@ -54,9 +54,7 @@ class Wordreference
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
 
         $_SESSION["jsonEnFrResults"] = array();
-        $_SESSION["nthLine"] = 0;
-
-
+        $_SESSION["nthRowOfWord"] = 0;
         /**************************/
         /********* Modèle *********/
         /**************************/
@@ -78,9 +76,7 @@ class Wordreference
             'english' =>'',
             'details' => '',
             'senses' => [
-                'french' => '',
-                'type' => '',
-                'details' => ''
+
             ]
         );
 
@@ -107,11 +103,11 @@ class Wordreference
                                 'english' =>'',
                                 'details' => '',
                                 'senses' => [
-                                    'french' => '',
-                                    'type' => '',
-                                    'details' => ''
+
                                 ]
                             );
+
+                            $_SESSION["nthRowOfWord"] = 0;
                         }
 
                         $row->filter('td')->each(function ($column) {
@@ -129,8 +125,8 @@ class Wordreference
                             else if($tdClass == 'ToWrd'){
 
 
-                                $_SESSION["json_enfr"]['senses']['french'] =  $column->text();
-                                $_SESSION["json_enfr"]['senses']['type'] =  $column->filter('em')->text();
+                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['french'] =  $column->text();
+                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['type'] =  $column->filter('em')->text();
                             }
 
                             else if($tdClass != 'FrWrd' && $tdClass != 'ToWrd'){
@@ -141,12 +137,10 @@ class Wordreference
                                 $_SESSION["json_enfr"]['details'] = $details;
 
                                 //details french
-                                $_SESSION["json_enfr"]['senses']['details'] =  str_replace($details, "", $column->text());
+                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['details'] =  str_replace($details, "", $column->text());
                             }
 
                         });
-
-                        // array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
 
                     }
 
@@ -171,8 +165,8 @@ class Wordreference
                         });
                     }
 
+                    $_SESSION["nthRowOfWord"] ++;
                     $_SESSION["previousTrClass"] = $trClass;
-                    $_SESSION["nthLine"] ++;
                 }
 
         });
