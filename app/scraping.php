@@ -54,6 +54,8 @@ class Wordreference
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
 
         $_SESSION["jsonEnFrResults"] = array();
+        $_SESSION["nthLine"] = 0;
+
 
         /**************************/
         /********* Modèle *********/
@@ -70,6 +72,17 @@ class Wordreference
         //         'details' => '**ex: (figuré, péjoratif)	**'
         //     ]
         // );
+        $_SESSION["json_enfr"] = array(
+            'slug' => '',
+            'type' => '',
+            'english' =>'',
+            'details' => '',
+            'senses' => [
+                'french' => '',
+                'type' => '',
+                'details' => ''
+            ]
+        );
 
         $_SESSION["previousTrClass"] = "";
 
@@ -77,25 +90,30 @@ class Wordreference
             'table.WRD tr:not(.ToEx)'
             )->each(function ($row) {
 
-                $_SESSION["json_enfr"] = array(
-                    'slug' => '**identifiant**',
-                    'type' => '**noun/verb/...**',
-                    'english' =>'**$search**',
-                    'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
-                    'senses' => [
-                        'french' => '**traduction**',
-                        'type' => '**nom/verbe/...**',
-                        'details' => '**ex: (figuré, péjoratif)	**'
-                    ]
-                );
-
                 $trClass = $row->extract(['class'])[0];
                     
                 if($trClass == 'even' || $trClass == 'odd' ){
                     
                     // ------ If the word changes -------------------------------------------------------------
                     if($_SESSION["previousTrClass"] != $trClass){
-                        
+
+                        //new row in json everytime the class changes(even / odd) except for the first iteration
+                        if($_SESSION["previousTrClass"] != ""){  
+                            array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]); 
+
+                            $_SESSION["json_enfr"] = array(
+                                'slug' => '',
+                                'type' => '',
+                                'english' =>'',
+                                'details' => '',
+                                'senses' => [
+                                    'french' => '',
+                                    'type' => '',
+                                    'details' => ''
+                                ]
+                            );
+                        }
+
                         $row->filter('td')->each(function ($column) {
                             
                             $tdClass = $column->extract(['class'])[0];
@@ -128,7 +146,7 @@ class Wordreference
 
                         });
 
-                        array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
+                        // array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
 
                     }
 
@@ -154,6 +172,7 @@ class Wordreference
                     }
 
                     $_SESSION["previousTrClass"] = $trClass;
+                    $_SESSION["nthLine"] ++;
                 }
 
         });
