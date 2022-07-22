@@ -53,25 +53,23 @@ class Wordreference
     public static function AllTd($category, $search){
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
 
-        if(isset($_SESSION["jsonEnFrResults"])){
-            unset($_SESSION["jsonEnFrResults"]);
-        }
-        
-        else{
-            $_SESSION["jsonEnFrResults"] = array();
-        }
-         
-        $json_enfr = array(
-            'slug' => '**identifiant**',
-            'type' => '**noun/verb/...**',
-            'english' =>'**$search**',
-            'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
-            'senses' => [
-                'french' => '**traduction**',
-                'type' => '**nom/verbe/...**',
-                'details' => '**ex: (figuré, péjoratif)	**'
-            ]
-        );
+        $_SESSION["jsonEnFrResults"] = array();
+
+        /**************************/
+        /********* Modèle *********/
+        /**************************/
+
+        // $json_enfr = array(
+        //     'slug' => '**identifiant**',
+        //     'type' => '**noun/verb/...**',
+        //     'english' =>'**$search**',
+        //     'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
+        //     'senses' => [
+        //         'french' => '**traduction**',
+        //         'type' => '**nom/verbe/...**',
+        //         'details' => '**ex: (figuré, péjoratif)	**'
+        //     ]
+        // );
 
         $_SESSION["previousTrClass"] = "";
 
@@ -84,23 +82,14 @@ class Wordreference
                 if($trClass == 'even' || $trClass == 'odd' ){
                     
                     if($_SESSION["previousTrClass"] != $trClass){
-                        // array_push($_SESSION["jsonEnFrResults"], "************");
-                        // array_push($_SESSION["jsonEnFrResults"], "**New line**");
-                        // array_push($_SESSION["jsonEnFrResults"], "************");
-                        $_SESSION["json_enfr"] = array(
-                            'slug' => '**identifiant**',
-                            'type' => '**noun/verb/...**',
-                            'english' =>'**$search**',
-                            'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
-                            'senses' => [
-                                'french' => '**traduction**',
-                                'type' => '**nom/verbe/...**',
-                                'details' => '**ex: (figuré, péjoratif)	**'
-                            ]
-                        );
+
+                        array_push($_SESSION["jsonEnFrResults"], "************");
+                        array_push($_SESSION["jsonEnFrResults"], "**New line**");
+                        array_push($_SESSION["jsonEnFrResults"], "************");
+
                     }
 
-                    array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
+
                     
                     if($trClass == 'even'){
                         array_push($_SESSION["jsonEnFrResults"], "**even**");
@@ -113,7 +102,7 @@ class Wordreference
                     $row->filter('td')->each(function ($column) {
                             
                         $tdClass = $column->extract(['class'])[0];
-                        // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");    
+                        array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");    
                             
                     });
 
@@ -123,16 +112,6 @@ class Wordreference
                 }
 
         });
-
-        // $page->filter(
-        //     'table.WRD:first-of-type tr.wrtopsection td,
-        //     table.WRD:first-of-type tr.even td:not(.FrEx):not(.ToEx),
-        //     table.WRD:first-of-type tr.odd td:not(.FrEx):not(.ToEx)'
-        //     )->each(function ($node) {
-           
-        //     array_push($_SESSION["AllTd"], $node->text());
-            
-        // });
 
         return $_SESSION["jsonEnFrResults"];
     }
