@@ -48,7 +48,7 @@ $(function() {
             console.log(response);
             //let's empty the div before filling with the json
             $("#resultJisho").html("");
-            let resultJson = JSON.stringify(response.data, null, 4);
+            let resultJson = JSON.stringify(response, null, 4);
             $("#resultJisho").html(`${resultJson}`);
             // document.getElementById("resultJisho").innerHTML = JSON.stringify(response.data, null, 4);
 
