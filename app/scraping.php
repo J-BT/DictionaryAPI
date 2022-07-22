@@ -53,12 +53,12 @@ class Wordreference
     public static function AllTd($category, $search){
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
 
-        if(isset($_SESSION["AllTd"])){
-            unset($_SESSION["AllTd"]);
+        if(isset($_SESSION["jsonEnFrResults"])){
+            unset($_SESSION["jsonEnFrResults"]);
         }
         
         else{
-            $_SESSION["AllTd"] = array();
+            $_SESSION["jsonEnFrResults"] = array();
         }
          
         $json_enfr = array(
@@ -83,30 +83,41 @@ class Wordreference
                     
                 if($trClass == 'even' || $trClass == 'odd' ){
                     
-                    if($_SESSION["previousTrClass"] != $trClass && !empty($_SESSION["previousTrClass"])){
-                        array_push($_SESSION["AllTd"], "\n**New line**\n");
+                    if($_SESSION["previousTrClass"] != $trClass){
+                        // array_push($_SESSION["jsonEnFrResults"], "************");
+                        // array_push($_SESSION["jsonEnFrResults"], "**New line**");
+                        // array_push($_SESSION["jsonEnFrResults"], "************");
+                        $_SESSION["json_enfr"] = array(
+                            'slug' => '**identifiant**',
+                            'type' => '**noun/verb/...**',
+                            'english' =>'**$search**',
+                            'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
+                            'senses' => [
+                                'french' => '**traduction**',
+                                'type' => '**nom/verbe/...**',
+                                'details' => '**ex: (figuré, péjoratif)	**'
+                            ]
+                        );
                     }
 
+                    array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
+                    
                     if($trClass == 'even'){
-                        // array_push($_SESSION["AllTd"], "**even** {$row->text()}");
-                        array_push($_SESSION["AllTd"], "**even**");
-                        $row->filter('td')->each(function ($column) {
-                            
-                            $tdClass = $column->extract(['class'])[0];
-                            array_push($_SESSION["AllTd"], "[class : {$tdClass}] {$column->text()}");    
-                        });
-
+                        array_push($_SESSION["jsonEnFrResults"], "**even**");
                     }
     
-                    if($trClass == 'odd'){
-                        // array_push($_SESSION["AllTd"], "**odd** {$row->text()}");
-                        array_push($_SESSION["AllTd"], "**even**");
-                        $row->filter('td')->each(function ($column) {
-
-                            $tdClass = $column->extract(['class'])[0];
-                            array_push($_SESSION["AllTd"], "[class : {$tdClass}] {$column->text()}");    
-                        });
+                    else if($trClass == 'odd'){
+                        array_push($_SESSION["jsonEnFrResults"], "**odd**");
                     }
+
+                    $row->filter('td')->each(function ($column) {
+                            
+                        $tdClass = $column->extract(['class'])[0];
+                        // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");    
+                            
+                    });
+
+                    
 
                     $_SESSION["previousTrClass"] = $trClass;
                 }
@@ -123,7 +134,7 @@ class Wordreference
             
         // });
 
-        return $_SESSION["AllTd"];
+        return $_SESSION["jsonEnFrResults"];
     }
 
     public static function FrToEn($search){
