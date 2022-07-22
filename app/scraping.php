@@ -78,6 +78,30 @@ class Wordreference
         return $newArray;
     }
 
+    public static function FrToEn($search){
+
+        $page = GoutteFacade::request('GET', "https://www.wordreference.com/enfr/$search");
+
+       
+
+        $json_enfr = array(
+            'slug' => '**identifiant**',
+            'type' => '**noun/verb/...**',
+            'english' =>'**$search**',
+            'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
+            'senses' => [
+                'french' => '**traduction**',
+                'type' => '**nom/verbe/...**',
+                'details' => '**ex: (figuré, péjoratif)	**'
+            ]
+        );
+
+        // $test = $page;
+
+        return $json_enfr;
+        // return $test;
+    }
+
     // Créer Json à partir des 3 methodes ci-dessus
     public static function GetJson($category, $search){
 
@@ -86,28 +110,34 @@ class Wordreference
         $toWords = Wordreference::toWords($category, $search);
         $allTd = Wordreference::AllTd($category, $search);
 
-        $result = array("allTd" => $allTd);
-        // $result = array_combine($fromWords, $toWords);
+        $json_enfr = Wordreference::FrToEn($search);
 
-        if(empty($allTd)){
-            $noNesult = array(
-                'meta' => [
-                    'status' => 404
-                ], 
-                'data' => "no result"
+        // $result = $fromWords;
+        // // $result = array("allTd" => $allTd);
+        // // $result = array_combine($fromWords, $toWords);
+
+        // if(empty($allTd)){
+        //     $noNesult = array(
+        //         'meta' => [
+        //             'status' => 404
+        //         ], 
+        //         'data' => "no result"
                 
-            );
-            return $noNesult;
-        }
+        //     );
+        //     return $noNesult;
+        // }
 
         $result = array(
             'meta' => [
                 'status' => 200
             ], 
-            'data' => $result
+            'data' => $json_enfr
             
         );
 
+        // $test = $json_enfr;
+
+        // return $test;
         return $result;
     }
         

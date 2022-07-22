@@ -124,6 +124,7 @@ class WordreferenceSearchController extends Controller
         $wordreferenceHistory->result = $result;
         $wordreferenceHistory->save();
 
+        // return response()->json(json_decode($result, JSON_UNESCAPED_UNICODE));
         return response()->json(json_decode($result, JSON_UNESCAPED_UNICODE));
 
     }
