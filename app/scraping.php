@@ -93,7 +93,37 @@ class Wordreference
                     
                 if($trClass == 'even' || $trClass == 'odd' ){
                     
-                    //------ Inside new word results -----------------------------------------------
+                    // ------ If the word changes -------------------------------------------------------------
+                    if($_SESSION["previousTrClass"] != $trClass){
+                        
+                        $row->filter('td')->each(function ($column) {
+                            
+                            $tdClass = $column->extract(['class'])[0];
+                            // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");
+
+                            if($tdClass == 'FrWrd'){
+                                $_SESSION["json_enfr"]['slug'] = $column->filter('strong')->text();
+                                $_SESSION["json_enfr"]['english'] = $column->filter('strong')->text();
+                                $_SESSION["json_enfr"]['type'] = $column->filter('em')->text();
+                            }
+
+                            else if($tdClass != 'FrWrd' && $tdClass != 'ToWrd'){
+                                
+                                $details = $column->text();
+                                $details = substr($details, 0, strpos($details, ')')); //removing the right part after the space
+                                $details = $details . ')';
+                                $_SESSION["json_enfr"]['details'] = $details;
+                            }
+
+                        });
+
+                        array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
+
+                    }
+
+                    // ------ If the word i the same -------------------------------------------------------------
+                    else{
+                         
 
                     if($trClass == 'even'){
                         array_push($_SESSION["jsonEnFrResults"], "**even**");
@@ -110,27 +140,6 @@ class Wordreference
        
                             
                     });
-
-
-
-                    // ------ New word -------------------------------------------------------------
-                    if($_SESSION["previousTrClass"] != $trClass){
-                        
-                        $row->filter('td')->each(function ($column) {
-                            
-                            $tdClass = $column->extract(['class'])[0];
-                            // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");
-
-                            if($tdClass == 'FrWrd'){
-                                $_SESSION["json_enfr"]['slug'] = $column->filter('strong')->text();
-                                $_SESSION["json_enfr"]['english'] = $column->filter('strong')->text();
-                                $_SESSION["json_enfr"]['type'] = $column->filter('em')->text();
-                            }
-
-                        });
-
-                        array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
-
                     }
 
                     $_SESSION["previousTrClass"] = $trClass;
