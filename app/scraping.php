@@ -61,22 +61,56 @@ class Wordreference
             $_SESSION["AllTd"] = array();
         }
          
+        $json_enfr = array(
+            'slug' => '**identifiant**',
+            'type' => '**noun/verb/...**',
+            'english' =>'**$search**',
+            'details' => '**ex: figurative (person: slow), slang, literal (settle with a fistfight), ...**',
+            'senses' => [
+                'french' => '**traduction**',
+                'type' => '**nom/verbe/...**',
+                'details' => '**ex: (figuré, péjoratif)	**'
+            ]
+        );
+
+        $_SESSION["previousTrClass"] = "";
+
         $page->filter(
             'table.WRD tr:not(.ToEx)'
-            )->each(function ($node) {
-                $attribute = $node->extract(['class']);
+            )->each(function ($row) {
 
-                // array_push($_SESSION["AllTd"], $attribute[0]);
+                $trClass = $row->extract(['class'])[0];
+                    
+                if($trClass == 'even' || $trClass == 'odd' ){
+                    
+                    if($_SESSION["previousTrClass"] != $trClass && !empty($_SESSION["previousTrClass"])){
+                        array_push($_SESSION["AllTd"], "\n**New line**\n");
+                    }
 
-                if($attribute[0] == 'even'){
-                    array_push($_SESSION["AllTd"], "**even** {$node->text()}");
+                    if($trClass == 'even'){
+                        // array_push($_SESSION["AllTd"], "**even** {$row->text()}");
+                        array_push($_SESSION["AllTd"], "**even**");
+                        $row->filter('td')->each(function ($column) {
+                            
+                            $tdClass = $column->extract(['class'])[0];
+                            array_push($_SESSION["AllTd"], "[class : {$tdClass}] {$column->text()}");    
+                        });
+
+                    }
+    
+                    if($trClass == 'odd'){
+                        // array_push($_SESSION["AllTd"], "**odd** {$row->text()}");
+                        array_push($_SESSION["AllTd"], "**even**");
+                        $row->filter('td')->each(function ($column) {
+
+                            $tdClass = $column->extract(['class'])[0];
+                            array_push($_SESSION["AllTd"], "[class : {$tdClass}] {$column->text()}");    
+                        });
+                    }
+
+                    $_SESSION["previousTrClass"] = $trClass;
                 }
 
-                if($attribute[0] == 'odd'){
-                    array_push($_SESSION["AllTd"], "**odd** {$node->text()}");
-                }
-            
-            
         });
 
         // $page->filter(
