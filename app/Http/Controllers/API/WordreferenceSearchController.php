@@ -129,14 +129,4 @@ class WordreferenceSearchController extends Controller
 
     }
 
-    public function wordreferenceTestScraping(Request $request)
-    {
-  
-        $category = $request->input('category');
-        $search = $request->input('search');
-
-        $response = Wordreference::test($category, $search);
-    
-        return $response;
-    }
 }

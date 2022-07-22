@@ -49,10 +49,55 @@ class Wordreference
         return $ToWrd;
     }
 
-    // à utiliser pour que les fromWord & ToWords correspondent
+    // Pour test---------------------------------------------------------------------------------
     public static function AllTd($category, $search){
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
+
+        if(isset($_SESSION["AllTd"])){
+            unset($_SESSION["AllTd"]);
+        }
+        
+        else{
+            $_SESSION["AllTd"] = array();
+        }
+         
+        $page->filter(
+            'table.WRD tr:not(.ToEx)'
+            )->each(function ($node) {
+                $attribute = $node->extract(['class']);
+
+                // array_push($_SESSION["AllTd"], $attribute[0]);
+
+                if($attribute[0] == 'even'){
+                    array_push($_SESSION["AllTd"], "**even** {$node->text()}");
+                }
+
+                if($attribute[0] == 'odd'){
+                    array_push($_SESSION["AllTd"], "**odd** {$node->text()}");
+                }
+            
+            
+        });
+
+        // $page->filter(
+        //     'table.WRD:first-of-type tr.wrtopsection td,
+        //     table.WRD:first-of-type tr.even td:not(.FrEx):not(.ToEx),
+        //     table.WRD:first-of-type tr.odd td:not(.FrEx):not(.ToEx)'
+        //     )->each(function ($node) {
+           
+        //     array_push($_SESSION["AllTd"], $node->text());
+            
+        // });
+
+        return $_SESSION["AllTd"];
+    }
+
+    public static function FrToEn($search){
+
+        $page = GoutteFacade::request('GET', "https://www.wordreference.com/enfr/$search");
+
         $_SESSION["AllTd"] = array();
+
         $page->filter(
             'table.WRD:first-of-type tr.wrtopsection td,
             table.WRD:first-of-type tr.even td:not(.FrEx):not(.ToEx),
@@ -75,15 +120,6 @@ class Wordreference
             }
         }
 
-        return $newArray;
-    }
-
-    public static function FrToEn($search){
-
-        $page = GoutteFacade::request('GET', "https://www.wordreference.com/enfr/$search");
-
-       
-
         $json_enfr = array(
             'slug' => '**identifiant**',
             'type' => '**noun/verb/...**',
@@ -98,7 +134,7 @@ class Wordreference
 
         // $test = $page;
 
-        return $json_enfr;
+        return $newArray;
         // return $test;
     }
 
@@ -131,7 +167,7 @@ class Wordreference
             'meta' => [
                 'status' => 200
             ], 
-            'data' => $json_enfr
+            'data' => $allTd
             
         );
 
@@ -140,12 +176,5 @@ class Wordreference
         // return $test;
         return $result;
     }
-
-    public static function test($category, $search){
-        $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
-
-        return var_dump($page);
-    }
-        
 
 }
