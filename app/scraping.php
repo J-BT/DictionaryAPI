@@ -81,17 +81,18 @@ class Wordreference
         );
 
         $_SESSION["previousTrClass"] = "";
+        $_SESSION["trClass"] = "";
 
         $page->filter(
-            'table.WRD tr:not(.ToEx)'
+            'table.WRD tr'
             )->each(function ($row) {
 
-                $trClass = $row->extract(['class'])[0];
+                $_SESSION["trClass"] = $row->extract(['class'])[0];
                     
-                if($trClass == 'even' || $trClass == 'odd' ){
+                if($_SESSION["trClass"] == 'even' || $_SESSION["trClass"] == 'odd' ){
                     
                     // ------ If the word changes -------------------------------------------------------------
-                    if($_SESSION["previousTrClass"] != $trClass){
+                    if($_SESSION["previousTrClass"] != $_SESSION["trClass"]){
 
                         //new row in json everytime the class changes(even / odd) except for the first iteration
                         if($_SESSION["previousTrClass"] != ""){  
@@ -110,7 +111,7 @@ class Wordreference
                             $_SESSION["nthRowOfWord"] = 0;
                         }
 
-                        $row->filter('td')->each(function ($column) {
+                        $row->filter('td:not(.FrEx):not(.ToEx)')->each(function ($column) {
                             
                             $tdClass = $column->extract(['class'])[0];
                             // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");
@@ -144,29 +145,33 @@ class Wordreference
 
                     }
 
-                    // ------ If the word i the same -------------------------------------------------------------
-                    if($_SESSION["previousTrClass"] == $trClass){
+                    // ------ If the word i the same (different row but same class (even/ odd)) -------------------------------------------
+                    if($_SESSION["previousTrClass"] == $_SESSION["trClass"]){
 
-
-                        // if($trClass == 'even'){
-                        //     array_push($_SESSION["jsonEnFrResults"], "**even**");
-                        // }
-        
-                        // else if($trClass == 'odd'){
-                        //     array_push($_SESSION["jsonEnFrResults"], "**odd**");
-                        // }
-
-                        $row->filter('td')->each(function ($column) {
+                        $row->filter('td:not(.FrEx):not(.ToEx)')->each(function ($column) {
                                 
-                            $tdClass = $column->extract(['class'])[0];
-                            // array_push($_SESSION["jsonEnFrResults"], "[class : {$tdClass}] {$column->text()}");
-        
+                            if($_SESSION["trClass"] == 'ToWrd'){
+
+
+                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['french'] =  $column->text();
+                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['type'] =  $column->filter('em')->text();
+                            }
+
+                            else if($_SESSION["trClass"] != 'FrWrd' && $_SESSION["trClass"] != 'ToWrd'){
                                 
+                                
+                                $details = $column->text();
+                                $details = substr($details, 0, strpos($details, ')')); //removing the right part after the space
+                                $details = $details . ')';
+                                //details french
+                                $_SESSION["json_enfr"]['senses'][$_SESSION["nthRowOfWord"]]['details'] =  str_replace($details, "", $column->text());
+                            }    
+                            
                         });
                     }
 
                     $_SESSION["nthRowOfWord"] ++;
-                    $_SESSION["previousTrClass"] = $trClass;
+                    $_SESSION["previousTrClass"] = $_SESSION["trClass"];
                 }
 
         });
