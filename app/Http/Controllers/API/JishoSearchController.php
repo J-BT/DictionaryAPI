@@ -102,7 +102,7 @@ class JishoSearchController extends Controller
 
             $noResult = array(
                 'meta' => [
-                    'status' => 404
+                    'status' => 200
                 ], 
                 'data' => [
                     'search' => $search,

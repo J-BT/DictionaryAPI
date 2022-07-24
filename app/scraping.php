@@ -42,6 +42,12 @@ class Wordreference
         $_SESSION["firstTableRow"] = true;
         $_SESSION["firstTrRow"] = true;
 
+        // return an empty json if no result
+        $countTables = $page->filter('div#articleWRD table.WRD ')->count();
+        if($countTables == 0){
+            return ""; 
+        }
+
         $page->filter(
             'div#articleWRD table.WRD '  // select 1st table : table.WRD:nth-of-type(1) tr
             )->each(function ($table){

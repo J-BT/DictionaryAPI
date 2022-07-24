@@ -84,28 +84,13 @@ class WordreferenceSearchController extends Controller
             $wordreferenceHistory->languageTo = "NaN"; 
         }
 
-
-
-        // $topSections = Wordreference::WordTopSections($category, $search);
-        // $fromWords = Wordreference::FromWords($category, $search);
-        // $toWords = Wordreference::toWords($category, $search);
-        // $allTd = Wordreference::AllTd($category, $search);
-        // $response = array("allTd" => $allTd);
-        
-        /******** Wordreference::GetJson *******/
-
-        // stocker json dans variable $response içi
         $response = Wordreference::GetJson($category, $search);
 
-        /************************************* */
-        
-        $datas = $response;
-
-        if(empty($datas)){
+        if(empty($response["datas"])){
 
             $noResult = array(
                 'meta' => [
-                    'status' => 404
+                    'status' => 200
                 ], 
                 'data' => [
                     'search' => $search,
