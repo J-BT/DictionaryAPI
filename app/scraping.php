@@ -12,6 +12,8 @@ class Wordreference
 
         $_SESSION["jsonEnFrResults"] = array();
         $_SESSION["nthRowOfWord"] = 0;
+        $_SESSION["previousTrClass"] = "";
+        $_SESSION["trClass"] = "";
 
         /************************/
         /********* Model *********/
