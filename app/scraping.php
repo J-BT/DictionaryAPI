@@ -6,7 +6,6 @@ session_start(); // car les variables locales ne fonctionnent pas dans les each(
 class Wordreference
 {
     
-
     // Provides english->french translations scraping on wordreference.com
     public static function EngToFr($category, $search){
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
@@ -37,26 +36,6 @@ class Wordreference
 
             ]
         );
-
-
-
-        // /*******Test******* */
-
-        // $page->filter(
-        //     'div#articleWRD table.WRD '  // select 1st table : table.WRD:nth-of-type(1) tr
-        //     )->each(function ($table){
-
-        //         array_push($_SESSION["jsonEnFrResults"], "======== new table ========");
-                
-        //         $table->filter('tr:not(.wrtopsection):not(.langHeader)')->each(function ($row) {
-                    
-        //             $rowClass = $row->extract(['class'])[0];
-        //             array_push($_SESSION["jsonEnFrResults"], $rowClass);
-        //         });
-
-        //     });
-
-        // /****************** */
 
         $_SESSION["firstTableRow"] = true;
         $_SESSION["firstTrRow"] = true;
@@ -167,6 +146,9 @@ class Wordreference
 
                 $_SESSION["firstTableRow"] = false;
             });
+
+            //And finally for the last row 
+            array_push($_SESSION["jsonEnFrResults"], $_SESSION["json_enfr"]);
 
         return $_SESSION["jsonEnFrResults"];
     }
