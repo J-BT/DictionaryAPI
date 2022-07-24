@@ -162,13 +162,13 @@ class Wordreference
     }
 
 
-    public static function GetJson($category, $search){
+    public static function GetJsonEngToFr($category, $search){
 
 
         $engToFr = Wordreference::EngToFr($category, $search);
 
         if(empty($engToFr)){
-            $engToFr = "no result";
+            $engToFr = 'no result';
         }
 
         $result = array(
@@ -177,6 +177,40 @@ class Wordreference
             ], 
             'data' => $engToFr
             
+            
+        );
+
+        return $result;
+    }
+
+    public static function GetJsonFrtoEng($category){
+
+        $FrtoEng = "";
+        
+        if(empty($FrtoEng)){
+            $FrtoEng = "the following category '{$category}' is coming soon";
+        }
+
+        $result = array(
+            'meta' => [
+                'status' => 200
+            ], 
+            'data' => $FrtoEng
+
+        );
+
+        return $result;
+    }
+
+    public static function GetJsonNoCategory($category){
+
+ 
+        $result = array(
+            'meta' => [
+                'status' => 200
+            ], 
+            'data' => "the following category '{$category}' is not available"
+
         );
 
         return $result;

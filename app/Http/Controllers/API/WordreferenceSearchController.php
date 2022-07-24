@@ -40,18 +40,35 @@ class WordreferenceSearchController extends Controller
      */
     public function show($category, $search)
     {
-        /*** Checking the table jisho_histories ***/
+        $saveInDB = false;
+
+        /*** Checking the table wordreference_histories ***/
         
         //-- if $search already exits, the endpoint renders the column 'result' --
         $db_query_wordreference = WordreferenceHistory::where('search', $search)->first();
 
-        // if(!empty($db_query_wordreference)){
+        if(!empty($db_query_wordreference) && $category == 'enfr'){
 
-        //     $resultInDB = "";
+            $resultInDB = $db_query_wordreference->result;
 
-        //     return response()->json(json_decode($resultInDB, JSON_UNESCAPED_UNICODE));
-        // }
-        
+            //------------------------------
+            // +1 to the column search Count
+            $searchCount = $db_query_wordreference->searchCount;
+            $searchCount += 1;
+
+            WordreferenceHistory::where('search', $search)
+            ->update(['searchCount' => $searchCount]);
+
+            //-----------------------------------------
+            // set actual datetime to updated_at column
+            date_default_timezone_set("Europe/Paris");
+            $datenow = date("Y-m-d H:i:s");
+
+            WordreferenceHistory::where('search', $search)
+            ->update(['updated_at' => $datenow]);
+
+            return response()->json(json_decode($resultInDB, JSON_UNESCAPED_UNICODE));
+        }
 
         //-- if $search doesn't exit in db, the endpoint calls wordreference's api --
 
@@ -68,6 +85,9 @@ class WordreferenceSearchController extends Controller
             $wordreferenceHistory->languageFrom = "english";
             $wordreferenceHistory->languageTo = "french";
 
+            $response = Wordreference::GetJsonEngToFr($category, $search);
+            $saveInDB = true;
+
         }
 
         else if($category == 'fren'){
@@ -75,6 +95,8 @@ class WordreferenceSearchController extends Controller
             $wordreferenceHistory->category = $category;
             $wordreferenceHistory->languageFrom = "french";
             $wordreferenceHistory->languageTo = "english";
+
+            $response = Wordreference::GetJsonFrtoEng($category);
         }
 
         else{
@@ -82,14 +104,18 @@ class WordreferenceSearchController extends Controller
             $wordreferenceHistory->category = $category;
             $wordreferenceHistory->languageFrom = "NaN";
             $wordreferenceHistory->languageTo = "NaN"; 
+
+            $response = Wordreference::GetJsonNoCategory($category);
         }
 
-        $response = Wordreference::GetJson($category, $search);
+        
 
         $result = json_encode($response, JSON_UNESCAPED_UNICODE);
         $wordreferenceHistory->result = $result;
-        $wordreferenceHistory->save();
 
+        if($saveInDB){
+            $wordreferenceHistory->save();
+        }
         // return response()->json(json_decode($result, JSON_UNESCAPED_UNICODE));
         return response()->json(json_decode($result, JSON_UNESCAPED_UNICODE));
 

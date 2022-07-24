@@ -104,10 +104,7 @@ class JishoSearchController extends Controller
                 'meta' => [
                     'status' => 200
                 ], 
-                'data' => [
-                    'search' => $search,
-                    'result' => 'no result'
-                ]
+                'data' => 'no result'
             );
     
             $jishoHistory->result = json_encode($noResult);
