@@ -47,7 +47,8 @@ class WordreferenceSearchController extends Controller
         //-- if $search already exits, the endpoint renders the column 'result' --
         $db_query_wordreference = WordreferenceHistory::where('search', $search)->first();
 
-        if(!empty($db_query_wordreference) && $category == 'enfr'){
+        if(!empty($db_query_wordreference) 
+            && $category == 'enfr'){
 
             $resultInDB = $db_query_wordreference->result;
 
@@ -86,8 +87,10 @@ class WordreferenceSearchController extends Controller
             $wordreferenceHistory->languageTo = "french";
 
             $response = Wordreference::GetJsonEngToFr($category, $search);
-            $saveInDB = true;
 
+            if($response["data"] != 'wrong category'){
+                $saveInDB = true;
+            }
         }
 
         else if($category == 'fren'){

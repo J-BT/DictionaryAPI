@@ -10,6 +10,20 @@ class Wordreference
     public static function EngToFr($category, $search){
         $page = GoutteFacade::request('GET', "https://www.wordreference.com/$category/$search");
 
+        /**************************************************************************************/
+        /******                 Only if select == English-French            *******************/
+        /**************************************************************************************/
+
+
+        $languageFrTo = $page->filter('div#nav a')->extract(['href'])[0];
+        $languageFrTo = str_replace("/", "", $languageFrTo);
+
+        //if the search in not in english 
+        if($languageFrTo != $category){
+            return "wrong category"; 
+        }
+
+
         $_SESSION["jsonEnFrResults"] = array();
         $_SESSION["nthRowOfWord"] = 0;
         $_SESSION["previousTrClass"] = "";
@@ -176,8 +190,6 @@ class Wordreference
                 'status' => 200
             ], 
             'data' => $engToFr
-            
-            
         );
 
         return $result;
