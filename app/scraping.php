@@ -167,6 +167,10 @@ class Wordreference
 
         $engToFr = Wordreference::EngToFr($category, $search);
 
+        if(empty($engToFr)){
+            $engToFr = "no result";
+        }
+
         $result = array(
             'meta' => [
                 'status' => 200

@@ -86,25 +86,6 @@ class WordreferenceSearchController extends Controller
 
         $response = Wordreference::GetJson($category, $search);
 
-        if(empty($response["datas"])){
-
-            $noResult = array(
-                'meta' => [
-                    'status' => 200
-                ], 
-                'data' => [
-                    'search' => $search,
-                    'result' => 'no result'
-                ]
-            );
-    
-            $wordreferenceHistory->result = json_encode($noResult);
-            $wordreferenceHistory->save();
-
-            return response()->json($noResult);
-            
-        }
-
         $result = json_encode($response, JSON_UNESCAPED_UNICODE);
         $wordreferenceHistory->result = $result;
         $wordreferenceHistory->save();
