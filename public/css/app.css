@@ -12447,3 +12447,41 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+/*index.blade.php*/
+/* 
+form
+{
+    width: 20vw;
+} */
+
+.endpointSearch{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-top : 50px;
+    margin-bottom: 50px;
+    width:40vw;
+}
+
+.endpointTitle{
+    font-family: "Lucida Console", Courier, monospace;
+    font-size: 1.5em;
+}
+.endpointVariable{
+    background-color: #e9ecef;
+}
+.endpointVariableBracket{
+    color: #e9ecef;
+}
+
+.resultEndpointCall {
+    text-align:left;
+    margin: 20px 20px 20px 0px;
+    padding:10px;
+    background:#fff;
+    color:black;
+    height:270px;
+    width: 40vw;
+    border:1px solid #ACD8F0;
+    overflow:auto; }
