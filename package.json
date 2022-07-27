@@ -13,6 +13,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "laravel-mix": "^6.0.49"
+    "bootstrap-sass": "^3.4.3",
+    "laravel-mix": "^6.0.49",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.54.0",
+    "sass-loader": "^12.6.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
   }
 }
