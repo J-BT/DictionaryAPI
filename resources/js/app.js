@@ -1,6 +1,8 @@
 // resources/js/app.js
 
 import './bootstrap';
+// import 'bootstrap'
+// import 'bootstrap/dist/css/bootstrap.min.css'
 
 import $ from 'jquery';
 window.$ = window.jQuery = $;

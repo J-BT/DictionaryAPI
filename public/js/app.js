@@ -2478,6 +2478,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery-ui/ui/widgets/datepicker.js */ "./node_modules/jquery-ui/ui/widgets/datepicker.js");
 /* harmony import */ var jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery_ui_ui_widgets_datepicker_js__WEBPACK_IMPORTED_MODULE_2__);
 // resources/js/app.js
+ // import 'bootstrap'
+// import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 window.$ = window.jQuery = (jquery__WEBPACK_IMPORTED_MODULE_1___default());
