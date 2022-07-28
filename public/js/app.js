@@ -5703,6 +5703,24 @@ jquery__WEBPACK_IMPORTED_MODULE_1___default()(function () {
       }
     });
   });
+}); //wordreference_histories
+
+jquery__WEBPACK_IMPORTED_MODULE_1___default()(function () {
+  jquery__WEBPACK_IMPORTED_MODULE_1___default()("#wordreference_historiesAjax").on("submit", function (e) {
+    //id of form 
+    e.preventDefault();
+    jquery__WEBPACK_IMPORTED_MODULE_1___default().ajax({
+      type: 'GET',
+      url: "api/wordreference_histories",
+      dataType: 'json',
+      success: function success(response) {
+        console.log(response); //let's empty the div before filling with the json
+
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()("#resultWordreferenceHistories").html("");
+        document.getElementById("resultWordreferenceHistories").innerHTML = JSON.stringify(response, null, 4);
+      }
+    });
+  });
 }); //jisho_search
 
 jquery__WEBPACK_IMPORTED_MODULE_1___default()(function () {
@@ -5729,23 +5747,6 @@ jquery__WEBPACK_IMPORTED_MODULE_1___default()(function () {
     });
   });
 }); //----fin jisho_search
-// $(document).ready(function() is depreciated ---> $(function()
-
-jquery__WEBPACK_IMPORTED_MODULE_1___default()(function () {
-  jquery__WEBPACK_IMPORTED_MODULE_1___default()('#submitJisho_histories').on('click', function () {
-    GetJishoHistories();
-  });
-});
-
-function GetJishoHistories() {
-  console.log("Jquery OK"); // $.ajax({
-  //     url: "{{ route('jisho_histories') }}",
-  //     success: function (result) {
-  //         if (result) {
-  //             console.log(result); 
-  //     } 
-  // });
-}
 
 /***/ }),
 

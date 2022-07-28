@@ -18,7 +18,7 @@ class JishoHistoryController extends Controller
      */
     public function index()
     {
-        $jishoHistories = JishoHistory::all();
+        $jishoHistories = JishoHistory::orderBy('id', 'DESC')->get();
 
         if($jishoHistories->count() > 0){
 

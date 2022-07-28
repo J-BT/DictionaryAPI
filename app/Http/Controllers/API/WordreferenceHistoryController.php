@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Storage;
 
 class WordreferenceHistoryController extends Controller
 {
+    public function WordreferenceFromHome(Request $request)
+    {
+  
+        $category = $request->input('category');
+        $search = $request->input('search');
+    
+        return redirect(route('wordreference_search', ['category' => $category, 'search' => $search]));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +27,7 @@ class WordreferenceHistoryController extends Controller
      */
     public function index()
     {
-        $wordreferenceHistories = WordreferenceHistory::all();
+        $wordreferenceHistories = WordreferenceHistory::orderBy('id', 'DESC')->get();
 
         if($wordreferenceHistories->count() > 0){
 

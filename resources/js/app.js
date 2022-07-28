@@ -35,6 +35,32 @@ $(function() {
 
   });
 
+
+//wordreference_histories
+$(function() {
+  $("#wordreference_historiesAjax").on("submit", function(e) { //id of form 
+    e.preventDefault();
+
+    $.ajax({
+      type: 'GET',
+      url: `api/wordreference_histories`,
+      dataType: 'json',
+
+      success: function(response) {
+
+          console.log(response);
+          //let's empty the div before filling with the json
+          $("#resultWordreferenceHistories").html("");
+          document.getElementById("resultWordreferenceHistories").innerHTML = JSON.stringify(response, null, 4);
+
+      }
+      
+    })
+  });
+
+});
+
+
 //jisho_search
 $(function() {
     $("#jisho_search_homeAjax").on("submit", function(e) { //id of form 
@@ -70,25 +96,3 @@ $(function() {
 
 
 //----fin jisho_search
-
-
-// $(document).ready(function() is depreciated ---> $(function()
-$(function() {
-    $('#submitJisho_histories').on('click', function(){
-        GetJishoHistories();
-    });
-});
-
-function GetJishoHistories() {
-    console.log("Jquery OK"); 
-    // $.ajax({
-
-    //     url: "{{ route('jisho_histories') }}",
-    //     success: function (result) {
-
-    //         if (result) {
-    //             console.log(result); 
-
-    //     } 
-    // });
-}
