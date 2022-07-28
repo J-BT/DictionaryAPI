@@ -23,7 +23,6 @@ $(function() {
 
         success: function(response) {
 
-            console.log(response);
             //let's empty the div before filling with the json
             $("#resultJishoHistories").html("");
             document.getElementById("resultJishoHistories").innerHTML = JSON.stringify(response, null, 4);
@@ -48,7 +47,6 @@ $(function() {
 
       success: function(response) {
 
-          console.log(response);
           //let's empty the div before filling with the json
           $("#resultWordreferenceHistories").html("");
           document.getElementById("resultWordreferenceHistories").innerHTML = JSON.stringify(response, null, 4);
@@ -77,7 +75,6 @@ $(function() {
 
         success: function(response) {
 
-            console.log(response);
             //let's empty the div before filling with the json
             $("#resultJisho").html("");
             let resultJson = JSON.stringify(response, null, 4);
@@ -108,7 +105,6 @@ $(function() {
 
       success: function(response) {
 
-          console.log(response);
           //let's empty the div before filling with the json
           $("#resultWordreference").html("");
           let resultJson = JSON.stringify(response, null, 4);
