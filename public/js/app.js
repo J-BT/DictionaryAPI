@@ -5746,7 +5746,32 @@ jquery__WEBPACK_IMPORTED_MODULE_1___default()(function () {
       }
     });
   });
-}); //----fin jisho_search
+}); //wordreference_search
+
+jquery__WEBPACK_IMPORTED_MODULE_1___default()(function () {
+  jquery__WEBPACK_IMPORTED_MODULE_1___default()("#wordreference_search_homeAjax").on("submit", function (e) {
+    //id of form 
+    e.preventDefault();
+    var category = jquery__WEBPACK_IMPORTED_MODULE_1___default()("#categoryWR").val();
+    var search = jquery__WEBPACK_IMPORTED_MODULE_1___default()("#searchWR").val();
+    jquery__WEBPACK_IMPORTED_MODULE_1___default().ajax({
+      type: 'GET',
+      url: "api/wordreference/".concat(category, "/").concat(search),
+      dataType: 'json',
+      data: {
+        category: category,
+        search: search
+      },
+      success: function success(response) {
+        console.log(response); //let's empty the div before filling with the json
+
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()("#resultWordreference").html("");
+        var resultJson = JSON.stringify(response, null, 4);
+        jquery__WEBPACK_IMPORTED_MODULE_1___default()("#resultWordreference").html("".concat(resultJson)); // document.getElementById("resultJisho").innerHTML = JSON.stringify(response.data, null, 4);
+      }
+    });
+  });
+});
 
 /***/ }),
 

@@ -61,22 +61,26 @@
         </div>
     </div>
 
-
     <div class="endpointSearch">
-        <form class="" action="{{ route('wordreference_search_home') }}" method="GET">
+        <form class="" id="wordreference_search_homeAjax" action="" method="GET">
             <h3 class="endpointTitle">/api/wordreference/{<span class="endpointVariable">category</span>}/{<span class="endpointVariable">search}</span></h3>
             <div class="input-group">
                 <span class="badge bg-primary">GET</span>
                 <span class="input-group-text" id="basic-addon1">/api/wordreference/</span>
-                <input type="text" class="form-control" name="category" placeholder="category" >
+                <input type="text" class="form-control" name="categoryWR" id="categoryWR" placeholder="category" >
                 <span class="input-group-text" id="basic-addon1">/</span>
-                <input type="text" class="form-control" name="search" placeholder="search" >
+                <input type="text" class="form-control" name="searchWR" id="searchWR" placeholder="search" >
 
                 <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
         </form>
-        <div class="resultEndpointCall"></div>
+        <div class="resultEndpointCall"  style='' >
+            <pre id="resultWordreference">
+
+            </pre> 
+        </div>
     </div>
+
 
 {{-- <p>{{ $datenow }}</p> --}}
 </div>

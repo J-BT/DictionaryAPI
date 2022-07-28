@@ -92,7 +92,33 @@ $(function() {
   });
 
 
+  //wordreference_search
+$(function() {
+  $("#wordreference_search_homeAjax").on("submit", function(e) { //id of form 
+    e.preventDefault();
 
+    let category = $("#categoryWR").val();
+    let search = $("#searchWR").val();
 
+    $.ajax({
+      type: 'GET',
+      url: `api/wordreference/${category}/${search}`,
+      dataType: 'json',
+      data: {category:category, search:search},
 
-//----fin jisho_search
+      success: function(response) {
+
+          console.log(response);
+          //let's empty the div before filling with the json
+          $("#resultWordreference").html("");
+          let resultJson = JSON.stringify(response, null, 4);
+          $("#resultWordreference").html(`${resultJson}`);
+          // document.getElementById("resultJisho").innerHTML = JSON.stringify(response.data, null, 4);
+
+      }
+      
+    })
+  });
+
+});
+
