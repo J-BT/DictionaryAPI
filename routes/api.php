@@ -1,7 +1,11 @@
 <?php
+
 use App\Http\Controllers\API\JishoHistoryController;
 use App\Http\Controllers\API\JishoSearch;
 use App\Http\Controllers\API\JishoSearchController;
+
+use App\Http\Controllers\API\WordreferenceHistoryController;
+use App\Http\Controllers\API\WordreferenceSearch;
 use App\Http\Controllers\API\WordreferenceSearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +29,7 @@ Route::get('jisho_histories', [JishoHistoryController::class, 'index'])->name('j
 Route::get('jisho/{category}/{search}', [JishoSearchController::class, 'show'])->name('jisho_search');
 Route::get('jishoHome', [JishoSearchController::class, 'jishoSearchFromHome'])->name('jisho_search_home');
 
+Route::get('wordreference_histories', [WordreferenceHistoryController::class, 'index'])->name('wordreference_histories');
 Route::get('wordreference/{category}/{search}', [WordreferenceSearchController::class, 'show'])->name('wordreference_search');
 Route::get('wordreferenceHome', [WordreferenceSearchController::class, 'WordreferenceSearchFromHome'])->name('wordreference_search_home');
 
