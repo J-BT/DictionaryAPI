@@ -29,7 +29,7 @@ class JishoSearchController extends Controller
      * @param  \App\Models\JishoHistory  $jishoHistory
      * @return \Illuminate\Http\Response
      */
-    public function show($category, $search)
+    public function english_version($category, $search)
     {
         /*** Checking the table jisho_histories ***/
         
